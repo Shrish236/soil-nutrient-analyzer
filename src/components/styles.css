@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.header-container{
+    display: flex;
+    height: 4vw;
+    background-color: #F7F7F7;
+    align-content: center;
+    padding: 1%;
+}
+.header-image{
+    margin: 0.25%;
+    height: 4vw;
+    float: left;
+}
+.header-text1{
+    position:absolute;
+    margin-left: 1.5vw;
+    width:35vw;
+    float: left;
+    font-size: 1.5vw;
+    text-align: left;
+}
+.header-text2{
+    position: absolute;
+    margin-left: 1.5vw;
+    margin-top: 2vw;
+    width:35vw;
+    float: left;
+    font-size: 1.4vw;
+    text-align: left;
+    color: #9E9E9E;
+}
