@@ -4,7 +4,7 @@ import '../styles.css'
 class Header extends Component {
   
   render() {
-    return <div className="flex h-20 bg-gray-100 p-1">
+    return <div className="flex h-20 bg-gray-100 p-1 w-fill">
         <img src = {logoURL} className="m-2 h-16 self-center float-left" alt='logo'/>
         <span className=''>
           <span className="absolute ml-2 mt-3 w-35 float-left text-left text-lg font-medium">Department of Horticulture and Plantation Crops</span>
