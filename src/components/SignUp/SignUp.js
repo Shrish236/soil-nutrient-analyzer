@@ -8,7 +8,7 @@ import {
   import Header from '../Header/Header';
   import Navbar from '../Header/Navbar';
   import Footer from '../Footer/Footer';
-  import logoURL from '../../assets/TN-logo-2.png'
+
 function SignUp() {
   return (
     <>
@@ -32,7 +32,20 @@ function SignUp() {
                     </Typography>
                     <Input
                         size="lg"
-                        placeholder="John Mark"
+                        maxLength={50}
+                        placeholder="Ashok Kumar"
+                        className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                        labelProps={{
+                        className: "before:content-none after:content-none",
+                        }}
+                    />
+                    <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                        Your Address
+                    </Typography>
+                    <Input
+                        size="lg"
+                        maxLength={100}
+                        placeholder="House No, Street, Locality, District, Pincode"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                         className: "before:content-none after:content-none",
@@ -43,6 +56,7 @@ function SignUp() {
                     </Typography>
                     <Input
                         size="lg"
+                        maxLength={50}
                         placeholder="name@mail.com"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
                         labelProps={{
@@ -54,6 +68,7 @@ function SignUp() {
                     </Typography>
                     <Input
                         type="password"
+                        maxLength={50}
                         size="lg"
                         placeholder="********"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -63,12 +78,12 @@ function SignUp() {
                     />
                     </div>
                     <Button className="mt-6" fullWidth>
-                    sign up
+                    Sign up
                     </Button>
                     <Typography color="gray" className="mt-4 text-center font-normal">
                     Already have an account?{" "}
-                    <a href="#" className="font-medium text-gray-900">
-                        Sign In
+                    <a href="#" className="font-medium text-gray-900 underline">
+                        Log In
                     </a>
                     </Typography>
                 </form>
