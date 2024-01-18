@@ -2,9 +2,14 @@ import React from 'react'
 import '../styles.css'
 import logoURL from '../../assets/TN-logo-2.png'
 import image from '../../assets/image1.jpg'
+import Header from '../Header/Header';
+import Navbar from '../Header/Navbar';
+import Footer from '../Footer/Footer';
 function Homepage() {
   return (
-
+    <>
+      <Header />
+      <Navbar />
       <div className="flex justify-center w-fill">
         {/* <div
           className="bg-cover bg-scroll self-center bg-center h-52 w-48"
@@ -50,6 +55,8 @@ function Homepage() {
         </div>
         {/* </div> */}
       </div>
+      <Footer />
+    </>
   )
 }
 
