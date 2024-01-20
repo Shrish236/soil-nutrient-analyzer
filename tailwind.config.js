@@ -7,6 +7,7 @@ module.exports = withMT({
     extend: {
       backgroundImage: {
         'logo': "url('/src/assets/TN-logo-3.png')",
+        'proflogo': "url('/src/assets/profile-background.jpg')",
       },
     },
   },

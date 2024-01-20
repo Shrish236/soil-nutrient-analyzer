@@ -16,7 +16,7 @@ function SignUp() {
         <Navbar />
         {/* <img src={logoURL} className="absolute justify-center mt-20 h-52 w-48" alt='logo'/> */}
         <center>
-        <div className='container items-center bg-cyan-100 w-4/12 mt-10 p-10 rounded-2xl bg-logo bg-no-repeat bg-center'>
+        <div className='container items-center bg-cyan-100 w-4/12 mt-10 p-10 rounded-2xl bg-logo bg-no-repeat bg-center mb-10'>
 
             <Card color="transparent" shadow={false} className=''>
                 <Typography variant="h3" color="blue-gray" className='text-2xl self-center'>

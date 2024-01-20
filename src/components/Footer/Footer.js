@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import logoURL from '../../assets/au-logo.png'
 import '../styles.css'
 class Footer extends Component {
-  
   render() {
+    const mainClass = "relative w-fill h-60px"
+    const spacing = "pt-36"
+    const combinedClasses = this.props.footerMargin ? `${mainClass} ${spacing}` :  mainClass;
     return(
-    <div className='relative mt-36 w-fill h-60px'>
+    <div className={combinedClasses}>
         <div className='relative h-5/6'>
             <hr className="h-px bg-gray-500 "/>
             <img src={logoURL} alt='AU Logo' className='w-12 h-12 ml-[454px] my-4'/>

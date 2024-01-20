@@ -5,7 +5,7 @@ import image from '../../assets/image1.jpg'
 import Header from '../Header/Header';
 import Navbar from '../Header/Navbar';
 import Footer from '../Footer/Footer';
-function Homepage() {
+function Homepage(props) {
   return (
     <>
       <Header />
@@ -55,7 +55,7 @@ function Homepage() {
         </div>
         {/* </div> */}
       </div>
-      <Footer />
+      <Footer  footerMargin = {props.footerMargin}/>
     </>
   )
 }
