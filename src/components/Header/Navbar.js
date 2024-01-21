@@ -1,30 +1,50 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import '../styles.css'
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
     <>
-      <nav className="h-10 relative flex flex-wrap items-center justify-between px-2 py-3 bg-green-600 w-fill">
-        <div className="container absolute px-4 mx-auto flex flex-wrap items-center justify-between">
-          <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
-            <a
-              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white"
-              href="#pablo"
+      <nav className="h-10 relative self-center flex flex-wrap items-center justify-between px-4 bg-green-600 w-full">
+          <div className="w-full relative float-left flex gap-10 justify-between lg:w-auto lg:static lg:block lg:justify-start self-center justify-self-start">
+            <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/"
+            >
+              Home
+            </Link>
+            <Link
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/signup"
             >
               Soil Health Card
-            </a>
-            <button
+            </Link>
+            {/* <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"
               onClick={() => setNavbarOpen(!navbarOpen)}
             >
-              <i className="fas fa-bars">hello</i>
-            </button>
+              <i className="fas fa-bars">Click</i>
+            </button> */}
           </div>
-          <div
+          <div className="w-full flex gap-10 self-center float-right lg:w-auto lg:static lg:block lg:justify-start ">
+            <Link
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/enquiryform"
+            >
+              Enquiry
+            </Link>
+            <Link
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/signup"
+            >
+              Login/Sign Up
+            </Link>
+            </div>
+          {/* <div
             className={
-              "lg:flex flex-grow items-center" +
-              (navbarOpen ? " flex" : " hidden")
+              "lg:flex items-end justify-end self-end justify-items-end justify-self-end" +
+              (navbarOpen ? " flex justify-items-end items-end text-right justify-self-end" : " hidden")
             }
             id="example-navbar-danger"
           >
@@ -54,8 +74,8 @@ export default function Navbar({ fixed }) {
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
+          </div> */}
+
       </nav>
     </>
   );

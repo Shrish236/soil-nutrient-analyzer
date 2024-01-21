@@ -8,6 +8,7 @@ module.exports = withMT({
       backgroundImage: {
         'logo': "url('/src/assets/TN-logo-3.png')",
         'proflogo': "url('/src/assets/profile-background.jpg')",
+        'wheatbg':"url('/src/assets/wheat-bg.jpg')",
       },
     },
   },

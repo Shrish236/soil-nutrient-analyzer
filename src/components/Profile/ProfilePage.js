@@ -10,7 +10,7 @@ import {
 } from "@material-tailwind/react";
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-
+import { Link } from 'react-router-dom';
 function ProfilePage() {
     
 
@@ -163,11 +163,12 @@ function ProfilePage() {
             <Typography className='font-bold text-start' color='black basis-3/4'>
               Test your soil nutrients by making an enquiry -{">"}
             </Typography>
+            <Link to="/enquiryform" className='self-center'>
             <Button size="sm" color='orange' className="flex text-xs justify-self-start items-center gap-2 ">
                   Enquiry
                   <ArrowOutwardIcon sx={{ fontSize: 15}}/>
             </Button>
-            
+            </Link>
           </div>
         </CardBody>
         
@@ -187,10 +188,12 @@ function ProfilePage() {
             <Typography className='font-bold text-start' color='black basis-3/4'>
               View Soil Health Card by clicking here -{">"}
             </Typography>
-            <Button size="sm" color='green' className="flex items-center gap-2 text-xs basis-1/4">
+            <Link to="/cardform">
+            <Button size="sm" color='green' className="flex items-center gap-2 text-xs">
                   Soil Card
                   <ArrowOutwardIcon sx={{fontSize: 15}}/>
             </Button>
+            </Link>
             
           </div>
         </CardBody>

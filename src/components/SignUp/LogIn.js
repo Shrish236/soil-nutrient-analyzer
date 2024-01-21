@@ -5,9 +5,10 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
-  import Header from '../Header/Header';
-  import Navbar from '../Header/Navbar';
-  import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
+import Navbar from '../Header/Navbar';
+import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 function LogIn() {
   return (
     <>
@@ -51,9 +52,11 @@ function LogIn() {
                             }}
                         />
                         </div>
-                        <Button className="mt-6" fullWidth>
-                            Submit
-                        </Button>
+                        <Link to="/profile">
+                            <Button className="mt-6" fullWidth>
+                                Submit
+                            </Button>
+                        </Link>
                         <Typography color="gray" className="mt-4 text-center font-normal">
                             Click here for admin login {"->"}{" "}
                             <a href="#" className="font-medium text-gray-900 underline">

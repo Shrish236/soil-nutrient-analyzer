@@ -5,10 +5,10 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
-  import Header from '../Header/Header';
-  import Navbar from '../Header/Navbar';
-  import Footer from '../Footer/Footer';
-
+import Header from '../Header/Header';
+import Navbar from '../Header/Navbar';
+import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 function SignUp() {
   return (
     <>
@@ -82,9 +82,9 @@ function SignUp() {
                     </Button>
                     <Typography color="gray" className="mt-4 text-center font-normal">
                     Already have an account?{" "}
-                    <a href="#" className="font-medium text-gray-900 underline">
+                    <Link to="/login" className="font-medium text-gray-900 underline">
                         Log In
-                    </a>
+                    </Link>
                     </Typography>
                 </form>
             </Card>

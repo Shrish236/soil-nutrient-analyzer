@@ -8,6 +8,7 @@ import {
   import Header from '../Header/Header';
   import Navbar from '../Header/Navbar';
   import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 function SoilHealthCardForm() {
   return (
     <>
@@ -38,14 +39,16 @@ function SoilHealthCardForm() {
                             }}
                         />
                         </div>
-                        <Button className="mt-6 w-2/6 bg-green-800" fullWidth>
-                            Submit
-                        </Button>
+                        <Link to="/soilcard">
+                            <Button className="mt-6 w-2/6 bg-green-800" fullWidth>
+                                Submit
+                            </Button>
+                        </Link>
                         <Typography color="gray" className="mt-4 text-center font-normal">
                             No soil health card number? Click here to make an enquiry {"->"}{" "}
-                            <a href="#" className="font-medium text-gray-900 underline">
+                            <Link to="/enquiryform" className="font-medium text-gray-900 underline">
                                 Enquiry
-                            </a>
+                            </Link>
                         </Typography>
                     </form>
                 </Card>

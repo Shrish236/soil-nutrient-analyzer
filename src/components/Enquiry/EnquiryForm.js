@@ -8,7 +8,7 @@ import {
   import Header from '../Header/Header';
   import Navbar from '../Header/Navbar';
   import Footer from '../Footer/Footer';
-
+import { Link } from 'react-router-dom';
 function EnquiryForm() {
   return (
     <>
@@ -103,14 +103,16 @@ function EnquiryForm() {
                     }}
                 />
                 </div>
+                <Link to="/profile">
                 <Button className="mt-6" fullWidth>
                 Submit
                 </Button>
+                </Link>
                 <Typography color="gray" className="mt-4 text-center font-normal">
                 Already made an enquiry?{" "}
-                <a href="#" className="font-medium text-gray-900 underline">
+                <Link to="/profile" className="font-medium text-gray-900 underline">
                     Check status
-                </a>
+                </Link>
                 </Typography>
             </form>
         </Card>
