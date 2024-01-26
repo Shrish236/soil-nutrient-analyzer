@@ -1,0 +1,76 @@
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import SYNCHRONOUS
+
+# Define your InfluxDB Cloud connection parameters
+url = "https://us-east-1-1.aws.cloud2.influxdata.com"  # Example URL, replace with your InfluxDB Cloud URL
+token = "PeXRfmRKybQERNtIPwL7xQLIwVac_8sATSgf4ycnogSFjusOyCnZepHgNCJiop9Cm-iZYJU4qNYrHrhFGaxzMg=="  # Replace with your InfluxDB Cloud token
+org = "Goop AI"  # Replace with your organization name
+bucket = "SoilHealthCard"  # Replace with your bucket name
+
+# Initialize the InfluxDB client
+client = InfluxDBClient(url=url, token=token)
+
+# Create a write API instance
+write_api = client.write_api(write_options=SYNCHRONOUS)
+
+# Define data to write
+data = [
+    {
+        "Soil Sample Number": 12345678910,
+        "Name": "Ramesh Kumar",
+        "Date of Sample Collection": "2017-07-02",
+        "District": "Chennai",
+        "Taluk": "Mambalam",
+        "Village": "Virugambakkam",
+        "Survey No": "224/2A",
+        "GeoPosition": {
+            "Latitude": "11.80N",
+            "Longitude": "79.76E"
+        },
+        "Nutrients": {
+            "Nitrogen (N)": 57,
+            "Phosporous (P)": 15.34,
+            "Potassium (K)": 243,
+            "Calcium (Ca)": 1763,
+            "Magnesium (Mg)": 586,
+            "Sulphur (S)": 31.5,
+            "Zinc (Zn)": 1.93,
+            "Manganese (Mn)": 96.62,
+            "Iron (Fe)": 20.91,
+            "Copper (Cu)": 6.94,
+            "Boron (B)": 1.1
+        }
+    },
+    {
+        "Soil Sample Number": 12345678981,
+        "Name": "Ra0",
+        "Date of Sample Collection": "2019-07-02",
+        "District": "Tirunelveli",
+        "Taluk": "Taluk 1",
+        "Village": "Village 1",
+        "Survey No": "22/4A",
+        "GeoPosition": {
+            "Latitude": "11.80N",
+            "Longitude": "79.76E"
+        },
+        "Nutrients": {
+            "Nitrogen (N)": 57,
+            "Phosporous (P)": 15.34,
+            "Potassium (K)": 243,
+            "Calcium (Ca)": 1763,
+            "Magnesium (Mg)": 586,
+            "Sulphur (S)": 31.5,
+            "Zinc (Zn)": 1.93,
+            "Manganese (Mn)": 96.62,
+            "Iron (Fe)": 20.91,
+            "Copper (Cu)": 6.94,
+            "Boron (B)": 1.1
+        }
+    }
+]
+
+# Write data to InfluxDB Cloud
+write_api.write(bucket=bucket, org=org, record=data)
+
+# Close the client connection
+client.close()
