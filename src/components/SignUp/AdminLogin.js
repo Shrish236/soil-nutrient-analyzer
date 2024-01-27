@@ -8,6 +8,7 @@ import {
   import Header from '../Header/Header';
   import Navbar from '../Header/Navbar';
   import Footer from '../Footer/Footer';
+import { Link } from 'react-router-dom';
 function AdminLogin() {
   return (
     <>
@@ -51,9 +52,11 @@ function AdminLogin() {
                             }}
                         />
                         </div>
-                        <Button className="mt-6" fullWidth>
-                            Submit
-                        </Button>
+                        <Link to="/adminprofile">
+                            <Button className="mt-6" fullWidth>
+                                Submit
+                            </Button>
+                        </Link>
                     </form>
                 </Card>
             </div>

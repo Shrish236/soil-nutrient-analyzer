@@ -15,7 +15,7 @@ export default function Navbar({ fixed }) {
             </Link>
             <Link
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
-              to="/signup"
+              to="/cardform"
             >
               Soil Health Card
             </Link>
@@ -39,6 +39,11 @@ export default function Navbar({ fixed }) {
               to="/signup"
             >
               Login/Sign Up
+            </Link>
+            <Link
+              className="text-sm font-bold leading-relaxed inline-block py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/adminlogin"
+            > Admin
             </Link>
             </div>
           {/* <div

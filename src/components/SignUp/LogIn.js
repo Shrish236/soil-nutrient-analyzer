@@ -59,9 +59,7 @@ function LogIn() {
                         </Link>
                         <Typography color="gray" className="mt-4 text-center font-normal">
                             Click here for admin login {"->"}{" "}
-                            <a href="#" className="font-medium text-gray-900 underline">
-                                Admin
-                            </a>
+                            <Link to="/adminlogin" className='underline font-semibold'>Admin</Link>   
                         </Typography>
                     </form>
                 </Card>

@@ -11,6 +11,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 function ProfilePage() {
     
 
@@ -73,24 +74,25 @@ function ProfilePage() {
 
     const TABLE_ROWS2 = [
       {
-        eNumber: "123456789",
+        eNumber: "1234567891",
         sampleDate: "30/12/23",
         district: "Chennai",
         taluk: "Maduravoyal",
         village: "Virugambakkam",
         surveyNo: "224/2A",
-        soilNumber:"987654321"
+        soilNumber:"1234567891"
       },
       {
-        eNumber: "123456789",
+        eNumber: "12345678910",
         sampleDate: "30/12/23",
         district: "Chennai",
         taluk: "Maduravoyal",
         village: "Virugambakkam",
         surveyNo: "224/2A",
-        soilNumber:"987654321"
+        soilNumber:"12345678910"
       },
     ];
+    const [selectedOption, setSelectedOption] = useState(0)
   return (
     <>
     <Header />
@@ -106,8 +108,8 @@ function ProfilePage() {
               </Button>
 
         
-        <Typography variant="h5" color="blue-gray" className="mb-2 mt-2">
-          Welcome Ramesh!
+        <Typography variant="h5" color="blue-gray" className="mb-2 text-center mt-2">
+          Welcome Admin!
         </Typography>
         <Typography variant="h6" className='mt-6 mb-6 underline text-start'>
           Your details: 
@@ -117,15 +119,7 @@ function ProfilePage() {
             Name:
           </Typography>
           <Typography>
-            Ramesh Kumar
-          </Typography>
-        </div>
-        <div className='flex gap-5'>
-          <Typography className='font-bold' color='black'>
-            Address:
-          </Typography>
-          <Typography className='w-full text-start'>
-            No.4/5, Iswarya Vilas, Virugambakkam, Chennai
+            Admin 1
           </Typography>
         </div>
         <div className='flex gap-5'>
@@ -133,7 +127,7 @@ function ProfilePage() {
             Email:
           </Typography>
           <Typography>
-            ramesh123@gmail.com
+            admin123@gmail.com
           </Typography>
         </div>
         <div className='flex gap-5'>
@@ -160,37 +154,12 @@ function ProfilePage() {
             Welcome Ramesh!
           </Typography> */}
           <div className='flex gap-5'>
-            <Typography className='font-bold text-start' color='black basis-3/4'>
-              Test your soil nutrients by making an enquiry -{">"}
+            <Typography className='font-bold text-center' color='black basis-3/4'>
+              Link enquiry number and soil sample number by clicking here -{">"}
             </Typography>
-            <Link to="/enquiryform" className='self-center'>
-            <Button size="sm" color='orange' className="flex text-xs justify-self-start items-center gap-2 ">
-                  Enquiry
-                  <ArrowOutwardIcon sx={{ fontSize: 15}}/>
-            </Button>
-            </Link>
-          </div>
-        </CardBody>
-        
-      </Card>
-      <Card className="w-full p-0">
-        <CardBody>
-                {/* <Button size="sm" className="flex items-center justify-self-start gap-2">
-                  Edit
-                  <EditIcon sx={{fontSize: 15}}/>
-                </Button> */}
-
-          
-          {/* <Typography variant="h5" color="blue-gray" className="mb-2 mt-2">
-            Welcome Ramesh!
-          </Typography> */}
-          <div className='flex gap-5'>
-            <Typography className='font-bold text-start' color='black basis-3/4'>
-              View Soil Health Card by clicking here -{">"}
-            </Typography>
-            <Link to="/cardform">
-            <Button size="sm" color='green' className="flex items-center gap-2 text-xs">
-                  Soil Card
+            <Link to="/linksoilnumber">
+            <Button size="sm" color='green' className="flex mt-5 items-center justify-center self-center gap-2 text-xs">
+                  Link
                   <ArrowOutwardIcon sx={{fontSize: 15}}/>
             </Button>
             </Link>
@@ -199,10 +168,10 @@ function ProfilePage() {
         </CardBody>
         
       </Card>
-      <Card className="w-full p-0">
+      <Card className="w-full p-0 text-center">
         <CardBody>
         <Typography className='font-semibold'>
-          Check the status of your enquiries and soil sample numbers below!
+          Check the status of all user enquiries and soil sample numbers below!
         </Typography>
         </CardBody>
         
@@ -213,11 +182,46 @@ function ProfilePage() {
     </div>
     </div>
     <div className='flex flex-col gap-10 self-center items-center w-10/12 bg-cyan-100 p-10 rounded-2xl bg-logo bg-no-repeat bg-center'>
-    <div className='block px-5'>
+    <div className='flex gap-10 self-center'>
+    <Button
+        class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+        color='green'
+        type="button"
+        onClick={()=>{
+            setSelectedOption(1)
+        }}
+    >
+        Enquiries In Progress
+    </Button>
+    <Button
+        class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+        color='orange'
+        className='focus:ring-1'
+        type="button"
+        onClick={()=>{
+            setSelectedOption(2)
+        }}
+    >
+        Completed Enquiries
+    </Button>
+    </div>
+    {(() =>{
+        if(selectedOption === 0){
+            return(
+                <Typography variant="h5" color="blue-gray" className="mb-2 text-center mt-2">
+          Select an option to view user data
+        </Typography>
+            )
+        }
+        else if(selectedOption === 1){
+            return(
+                <>
+                <div className='block px-5'>
+    
     <Typography color="black" className="my-2 font-semibold self-center">
         The list of enquiries made by you will appear here!
     </Typography>
-    <Card className="max-h-64 w-fill overflow-scroll overflow-x-auto rounded-sm text-sm">
+    <Card className="max-h-80 w-fill overflow-scroll overflow-x-auto rounded-sm text-sm">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -277,9 +281,6 @@ function ProfilePage() {
                   </Typography>
                 </td>
                 <td className={classes}>
-                  {
-
-                  }
                   <Typography variant="small" color="blue-gray" className="text-red-600 font-normal">
                     {status}
                   </Typography>
@@ -291,11 +292,17 @@ function ProfilePage() {
       </table>
     </Card>
     </div>
-    <div className='block px-5'>
+    
+                </>
+            )
+        }
+        else{
+            return(
+            <div className='block px-5'>
     <Typography color="black" className="my-2 font-semibold self-center">
         The soil sample number for each completed enquiry can be found below!
     </Typography>
-    <Card className="max-h-64 w-fill overflow-scroll overflow-x-auto rounded-sm text-sm">
+    <Card className="max-h-80 w-fill overflow-scroll overflow-x-auto rounded-sm text-sm">
       <table className="w-full min-w-max table-auto text-left">
         <thead>
           <tr>
@@ -349,9 +356,11 @@ function ProfilePage() {
                   </Typography>
                 </td>
                 <td className={`${classes} bg-blue-gray-50/50`}>
+                <Link to={`/soilcard/${soilNumber}`} className='underline'>
                   <Typography variant="small" color="blue-gray" className="font-semibold">
                     {soilNumber}
                   </Typography>
+                  </Link>
                 </td>
               </tr>
             );
@@ -360,6 +369,9 @@ function ProfilePage() {
       </table>
     </Card>
     </div>
+    )}
+    })()}
+    
     </div>
     </div>
     <Footer />

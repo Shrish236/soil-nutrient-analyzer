@@ -56,14 +56,13 @@ class SoilCard(APIView):
                                 org="Goop AI",
                                 ssl=True,
                                 verify_ssl=True,
-                                ssl_ca_cert=ca_cert_path,
-                                debug=True)
+                                ssl_ca_cert=ca_cert_path)
 
         # Query data from the InfluxDB cloud bucket
         # query = f'from(bucket:"SoilHealthCard") |> range(start: -1h) |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")'
         query =  f'''
             from(bucket: "SoilHealthCard")
-            |> range(start: -12h)
+            |> range(start: -24h)
             |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")
         '''
         tables = client.query_api().query(query, org="Goop AI")
