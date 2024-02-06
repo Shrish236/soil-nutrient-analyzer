@@ -11,88 +11,161 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import LoadingScreen from '../Loading/LoadingScreen';
 function ProfilePage() {
     
+    const [userDetails, setUserDetails] = useState({})
+    const [isLoading, setIsLoading] = useState(0)
+    const [enquiry, setEnquiry] = useState([])
+    const [enquiryLoading, setEnquiryLoading] = useState(0)
 
-    const TABLE_HEAD = ["Enquiry No", "Name", "District", "Taluk", "Village", "Survey No", "Enquiry Date", "Status/ENo"];
+    const TABLE_HEAD = ["Enquiry No", "Name", "District", "Taluk", "Village", "Survey No", "Status"];
     
-    const TABLE_HEAD2 = ["Enquiry No", "Sample Collection Date", "District", "Taluk", "Village", "Survey No", "Soil Sample No"];
+    const TABLE_HEAD2 = ["Enquiry No", "District", "Taluk", "Village", "Survey No", "Soil Sample No"];
     
-    const TABLE_ROWS = [
-    {
-        name: "John Michael",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        date: "24/12/2023",
-        status: "In progress",
-        eNumber: "123456789"
-    },
-    {
-        name: "John Micheal",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        date: "24/12/2023",
-        status: "In progress",
-        eNumber: "123456789"
-    },
-    {
-        name: "John Michael",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        date: "24/12/2023",
-        status: "Completed",
-        eNumber: "123456789"
-    },
-    {
-        name: "John Michael",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        date: "24/12/2023",
-        status: "In progress",
-        eNumber: "123456789"
-    },
-    {
-      name: "John Michael",
-      district: "Chennai",
-      taluk: "Maduravoyal",
-      village: "Virugambakkam",
-      surveyNo: "224/2A",
-      date: "24/12/2023",
-      status: "In progress",
-      eNumber: "123456789"   
-    },
-    ];
+    // const TABLE_ROWS = [
+    // {
+    //     name: "John Michael",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     date: "24/12/2023",
+    //     status: "In progress",
+    //     eNumber: "123456789"
+    // },
+    // {
+    //     name: "John Micheal",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     date: "24/12/2023",
+    //     status: "In progress",
+    //     eNumber: "123456789"
+    // },
+    // {
+    //     name: "John Michael",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     date: "24/12/2023",
+    //     status: "Completed",
+    //     eNumber: "123456789"
+    // },
+    // {
+    //     name: "John Michael",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     date: "24/12/2023",
+    //     status: "In progress",
+    //     eNumber: "123456789"
+    // },
+    // {
+    //   name: "John Michael",
+    //   district: "Chennai",
+    //   taluk: "Maduravoyal",
+    //   village: "Virugambakkam",
+    //   surveyNo: "224/2A",
+    //   date: "24/12/2023",
+    //   status: "In progress",
+    //   eNumber: "123456789"   
+    // },
+    // ];
 
-    const TABLE_ROWS2 = [
-      {
-        eNumber: "1234567891",
-        sampleDate: "30/12/23",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        soilNumber:"1234567891"
-      },
-      {
-        eNumber: "12345678910",
-        sampleDate: "30/12/23",
-        district: "Chennai",
-        taluk: "Maduravoyal",
-        village: "Virugambakkam",
-        surveyNo: "224/2A",
-        soilNumber:"12345678910"
-      },
-    ];
+    // const TABLE_ROWS2 = [
+    //   {
+    //     eNumber: "1234567891",
+    //     sampleDate: "30/12/23",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     soilNumber:"1234567891"
+    //   },
+    //   {
+    //     eNumber: "12345678910",
+    //     sampleDate: "30/12/23",
+    //     district: "Chennai",
+    //     taluk: "Maduravoyal",
+    //     village: "Virugambakkam",
+    //     surveyNo: "224/2A",
+    //     soilNumber:"12345678910"
+    //   },
+    // ];
     const [selectedOption, setSelectedOption] = useState(0)
+    useEffect(() => {
+      const email = "admin123@gmail.com"
+      const mobile = "1234567891"
+      
+      function getUserDetails(){
+        const params = {
+          email : email
+        }
+        axios.get('http://localhost:8000/api/admins/', { params })
+        .then(response => {
+          const responseData = response.data;
+          console.log(responseData)
+          setUserDetails(responseData)
+          setIsLoading(2)
+          }
+        )
+        .catch(error => {
+          console.log(error)
+          setIsLoading(1)
+        })
+      }
+      
+      function getEnquiryDetails(){
+        axios.get('http://localhost:8000/api/enquiries/')
+        .then(response => {
+          const responseData = response.data;
+          console.log(responseData)
+          setEnquiry(responseData)
+          if(responseData.length !== 0){
+            setEnquiryLoading(1)
+          }
+          else{
+            setEnquiryLoading(0)
+          }
+          }
+        )
+        .catch(error => {
+          console.log(error)
+          // setEnquiryLoading(1)
+        })
+      }
+
+      getUserDetails()
+      getEnquiryDetails()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+    if(isLoading === 0){
+      return(
+        <>
+          <LoadingScreen />
+        </>
+      )
+    }
+    else if(isLoading === 1){
+      return(
+        <>
+          <Header />
+          <Navbar />
+          <div className='py-10 self-center text-center'>
+          <Typography color="black" variant="h4" className="my-2 font-semibold self-center">
+            Server error please try again later!
+          </Typography>
+          </div>
+        </>
+      )
+    }
+    else if(isLoading === 2){
   return (
     <>
     <Header />
@@ -119,7 +192,7 @@ function ProfilePage() {
             Name:
           </Typography>
           <Typography>
-            Admin 1
+            {userDetails['name']}
           </Typography>
         </div>
         <div className='flex gap-5'>
@@ -127,7 +200,7 @@ function ProfilePage() {
             Email:
           </Typography>
           <Typography>
-            admin123@gmail.com
+            {userDetails['email']}
           </Typography>
         </div>
         <div className='flex gap-5'>
@@ -135,7 +208,7 @@ function ProfilePage() {
             Mobile:
           </Typography>
           <Typography>
-            9876351728
+            {userDetails['mobile']}
           </Typography>
         </div>
       </CardBody>
@@ -219,7 +292,7 @@ function ProfilePage() {
                 <div className='block px-5'>
     
     <Typography color="black" className="my-2 font-semibold self-center">
-        The list of enquiries made by you will appear here!
+        The list of enquiries in the database will appear here!
     </Typography>
     <Card className="max-h-80 w-fill overflow-scroll overflow-x-auto rounded-sm text-sm">
       <table className="w-full min-w-max table-auto text-left">
@@ -239,15 +312,15 @@ function ProfilePage() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(({ name, district, taluk, village, surveyNo, date, status, eNumber}, index) => {
-            const isLast = index === TABLE_ROWS.length - 1;
+          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village }, index) => {
+            const isLast = index === enquiry.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-            const statusColor = status === "In progress" ? 'bg-red-100' : 'bg-green-100' 
+            const statusColor = soil_sample_no === null ? 'bg-red-100' : 'bg-green-100' 
             return (
               <tr key={name} className={statusColor}>
                 <td className={`${classes} bg-blue-gray-50/50`}>
                   <Typography variant="small" color="blue-gray" className=" max-w-20 font-normal">
-                    {eNumber}
+                    {enquiry_no}
                   </Typography>
                 </td>
                 <td className={classes}>
@@ -272,17 +345,23 @@ function ProfilePage() {
                 </td>
                 <td className={classes}>
                   <Typography variant="small" color="blue-gray" className="font-normal">
-                    {surveyNo}
+                    {survey_no}
                   </Typography>
                 </td>
                 <td className={`${classes} bg-blue-gray-50/50`}>
                   <Typography variant="small" color="blue-gray" className="font-normal">
-                    {date}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography variant="small" color="blue-gray" className="text-red-600 font-normal">
-                    {status}
+                  {(() => {
+                      if(soil_sample_no!==null){
+                        return(
+                          <span className='text-green-600'>Completed</span>
+                        )
+                      }
+                      else{
+                        return(
+                          <span className='text-red-600'>In Progress</span>
+                        )
+                      }
+                    })()}
                   </Typography>
                 </td>
               </tr>
@@ -320,19 +399,15 @@ function ProfilePage() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS2.map(({ eNumber, sampleDate, district, taluk, village, surveyNo, soilNumber}, index) => {
-            const isLast = index === TABLE_ROWS.length - 1;
+          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village}, index) => {
+            const isLast = index === enquiry.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+            if(soil_sample_no !== null){
             return (
-              <tr key={eNumber}>
-                <td className={`${classes} bg-blue-gray-50/50`}>
+              <tr key={enquiry_no}>
+                <td className={`${classes}`}>
                   <Typography variant="small" color="blue-gray" className=" max-w-20 font-normal">
-                    {eNumber}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography variant="small" color="blue-gray" className=" max-w-20 font-normal">
-                    {sampleDate}
+                    {enquiry_no}
                   </Typography>
                 </td>
                 <td className={`${classes} bg-blue-gray-50/50`}>
@@ -352,18 +427,19 @@ function ProfilePage() {
                 </td>
                 <td className={classes}>
                   <Typography variant="small" color="blue-gray" className="font-normal">
-                    {surveyNo}
+                    {survey_no}
                   </Typography>
                 </td>
                 <td className={`${classes} bg-blue-gray-50/50`}>
-                <Link to={`/soilcard/${soilNumber}`} className='underline'>
+                <Link to={`/soilcard/${soil_sample_no}`} className='underline'>
                   <Typography variant="small" color="blue-gray" className="font-semibold">
-                    {soilNumber}
+                    {soil_sample_no}
                   </Typography>
                   </Link>
                 </td>
               </tr>
             );
+            }
           })}
         </tbody>
       </table>
@@ -377,6 +453,7 @@ function ProfilePage() {
     <Footer />
     </>
   )
+  }
 }
 
 export default ProfilePage

@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 function CardPage() {
   const { sampleNumber } = useParams()
   const [responseData, setResponseData] = useState({});
-  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(0)
   useEffect(() => {
     const params = {
       soil_sample_no : sampleNumber
@@ -22,21 +22,27 @@ function CardPage() {
     axios.get('http://localhost:8000/api/soilcard', { params })
     .then(response => {
       const responseData = response.data;
+      console.log(responseData)
+      if(responseData.length===0){
+        setIsLoaded(2)
+      }
+      else{
+        let tempDictionary = {};
 
-      let tempDictionary = {};
-
-      responseData.forEach(item => {
-        
-        const field = item['_field'];
-        tempDictionary[field] = item;
-        // console.log(tempDictionary['Boron']['_field'])
-      });
-      console.log(tempDictionary)
-      setResponseData(tempDictionary);
-      setIsLoaded(true)
-      // console.log(responseData['Boron'])
+        responseData.forEach(item => {
+          
+          const field = item['_field'];
+          tempDictionary[field] = item;
+          // console.log(tempDictionary['Boron']['_field'])
+        });
+        // console.log(tempDictionary)
+        setResponseData(tempDictionary);
+        setIsLoaded(3)
+        // console.log(responseData['Boron'])
+      }
     })
     .catch(error => {
+      setIsLoaded(1)
       console.log(error)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -161,10 +167,36 @@ function CardPage() {
       },
     ];
 
-    if(!isLoaded){
+    if(isLoaded === 0){
       return(
         <>
           <LoadingScreen />
+        </>
+      )
+    }
+    else if(isLoaded === 1){
+      return(
+        <>
+          <Header />
+          <Navbar />
+          <div className='py-10 self-center text-center'>
+          <Typography color="black" variant="h4" className="my-2 font-semibold self-center">
+            Server error please try again later!
+          </Typography>
+          </div>
+        </>
+      )
+    }
+    else if(isLoaded === 2){
+      return(
+        <>
+          <Header />
+          <Navbar />
+          <div className='py-10 self-center text-center'>
+          <Typography color="black" variant="h4" className="my-2 font-semibold self-center">
+            Please enter correct soil sample number and try again!
+          </Typography>
+          </div>
         </>
       )
     }

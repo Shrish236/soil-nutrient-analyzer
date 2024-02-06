@@ -26,6 +26,7 @@ SECRET_KEY = "django-insecure-ahcdqi&-l&a-uj)))lmeob0@8&k3(6lqona6i6_6h+f5xn%424
 DEBUG = True
 
 ALLOWED_HOSTS = [
+    '127.0.0.1',
     'localhost',
     '192.168.56.1',
 ]
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
     "users",
     "enquiries",
+    "admins",
 ]
 
 MIDDLEWARE = [
@@ -154,3 +156,4 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+

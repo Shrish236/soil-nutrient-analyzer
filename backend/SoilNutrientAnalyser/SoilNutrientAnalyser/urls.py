@@ -21,5 +21,6 @@ from users import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('api/', include('users.urls')),
-    path('api/', include('enquiries.urls'))
+    path('api/', include('enquiries.urls')),
+    path('api/', include('admins.urls'))
 ]

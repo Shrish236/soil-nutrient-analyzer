@@ -22,11 +22,11 @@ function SoilHealthCardForm() {
         <Header />
         <Navbar />
         <center>
-        <Typography variant="h3" color="blue-gray" className='text-2xl self-center mt-10'>
-                        Soil Health Card
-        </Typography>
+            <div className='w-fill h-fill py-10 bg-soilformbg bg-no-repeat bg-center'>
             <div className='container items-center bg-cyan-100 w-5/12 mt-5 p-10 rounded-2xl bg-logo bg-no-repeat bg-center mb-10'>
-            
+            <Typography variant="h3" color="blue-gray" className='text-2xl self-center my-5'>
+                        Soil Health Card
+            </Typography>
                 <Card color="transparent" shadow={false} className=''>
                     <Typography color="gray" className="mt-1 font-normal text-md self-center">
                         Generate soil health card by entering your soil sample number
@@ -61,6 +61,7 @@ function SoilHealthCardForm() {
                         </Typography>
                     </form>
                 </Card>
+            </div>
             </div>
         </center>
         <Footer />
