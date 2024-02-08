@@ -15,6 +15,7 @@ module.exports = withMT({
         'loginformbg':"url('/src/assets/loginForm.jpg')",
         'adminloginformbg':"url('/src/assets/adminlogin.jpg')",
         'soilnolinkformbg':"url('/src/assets/soilnolinkform.jpg')",
+        'homepagebg':"url('/src/assets/TN-logo-3.png')"
       },
     },
   },

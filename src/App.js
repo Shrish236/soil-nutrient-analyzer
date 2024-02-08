@@ -9,22 +9,25 @@ import EnquiryForm from './components/Enquiry/EnquiryForm';
 import CardPage from './components/SoilHealthCard/CardPage';
 import AdminProfilePage from './components/Admin/AdminProfilePage';
 import LinkSoilSampleNumber from './components/Admin/LinkSoilSampleNumber';
+import { RequireAuth } from './utils/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './utils/auth';
 function App() {
   return (
+    <AuthProvider>
     <Routes>
       <Route path='/' element={<Homepage footerMargin="true"/>} />
       <Route path='signup' element={<SignUp />} />
       <Route path='login' element={<LogIn />} />
       <Route path='adminlogin' element={<AdminLogin />} />
-      <Route path='enquiryform' element={<EnquiryForm />} />
-      <Route path='profile' element={<ProfilePage />} />
-      <Route path='adminprofile' element={<AdminProfilePage />} />
-      <Route path='linksoilnumber' element = {<LinkSoilSampleNumber />} />
+      <Route path='enquiryform' element={<RequireAuth><EnquiryForm /></RequireAuth>} />
+      <Route path='profile' element={<RequireAuth><ProfilePage /></RequireAuth>} />
+      <Route path='adminprofile' element={<RequireAuth><AdminProfilePage /></RequireAuth>} />
+      <Route path='linksoilnumber' element = {<RequireAuth><LinkSoilSampleNumber /></RequireAuth>} />
       <Route path='cardform' element={<SoilHealthCardForm />} />
       <Route path='/soilcard/:sampleNumber' element={<CardPage />} />
     </Routes>
-    // <EnquiryForm />
+    </AuthProvider>
   );
 }
 

@@ -11,12 +11,16 @@ import Footer from '../Footer/Footer';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../utils/auth';
+
 function LogIn() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [verified, setVerified] = useState(0)
     const [errorMessage, setErrorMessage] = useState('')
+    const win = window.sessionStorage;
+    const auth = useAuth();
     function checkUser(){
         axios.post('http://localhost:8000/api/users/', { 
             email : email,
@@ -25,6 +29,9 @@ function LogIn() {
         .then(response => {
           const responseData = response.data;
           if(responseData['Success']!=null){
+            win.setItem('email', email)
+            win.setItem('type', 'user')
+            auth.login(email)
             navigate('/profile')
           }
         })

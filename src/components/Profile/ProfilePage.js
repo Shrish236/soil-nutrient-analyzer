@@ -10,16 +10,20 @@ import {
 } from "@material-tailwind/react";
 import EditIcon from '@mui/icons-material/Edit';
 import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoadingScreen from '../Loading/LoadingScreen';
+import { useAuth } from '../../utils/auth';
 function ProfilePage() {
     const [userDetails, setUserDetails] = useState({})
     const [isLoading, setIsLoading] = useState(0)
     const [enquiry, setEnquiry] = useState([])
     const [enquiryLoading, setEnquiryLoading] = useState(0)
-
+    const [getEnquiry, setGetEnquiry] = useState(0)
+    const navigate = useNavigate()
+    const auth = useAuth();
+    
     const TABLE_HEAD = ["Enquiry No", "Name", "District", "Taluk", "Village", "Survey No", "Status"];
     
     const TABLE_HEAD2 = ["Enquiry No", "District", "Taluk", "Village", "Survey No", "Soil Sample No"];
@@ -97,14 +101,12 @@ function ProfilePage() {
     //     soilNumber:"987654321"
     //   },
     // ];
-
+    const win = window.sessionStorage;
     useEffect(() => {
-      const email = "ramesh123@gmail.com"
-      const mobile = "1234567891"
       
       function getUserDetails(){
         const params = {
-          email : email
+          email : auth.user === null? win.getItem('email') : auth.user
         }
         axios.get('http://localhost:8000/api/users/', { params })
         .then(response => {
@@ -112,6 +114,7 @@ function ProfilePage() {
           console.log(responseData)
           setUserDetails(responseData)
           setIsLoading(2)
+          setGetEnquiry(1)   
           }
         )
         .catch(error => {
@@ -120,31 +123,7 @@ function ProfilePage() {
         })
       }
       
-      function getEnquiryDetails(){
-        const params = {
-          mobile : mobile
-        }
-        axios.get('http://localhost:8000/api/enquiries/', { params })
-        .then(response => {
-          const responseData = response.data;
-          console.log(responseData)
-          setEnquiry(responseData)
-          if(responseData.length !== 0){
-            setEnquiryLoading(1)
-          }
-          else{
-            setEnquiryLoading(0)
-          }
-          }
-        )
-        .catch(error => {
-          console.log(error)
-          // setEnquiryLoading(1)
-        })
-      }
-
       getUserDetails()
-      getEnquiryDetails()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     if(isLoading === 0){
@@ -168,6 +147,35 @@ function ProfilePage() {
       )
     }
     else if(isLoading === 2){
+      if(getEnquiry === 1){
+        function getEnquiryDetails(){
+          if(isLoading == 2){
+            const params = {
+              mobile : userDetails['mobile']
+            }
+            axios.get('http://localhost:8000/api/enquiries/', { params })
+            .then(response => {
+              const responseData = response.data;
+              console.log(responseData)
+              setEnquiry(responseData)
+              if(responseData.length !== 0){
+                setEnquiryLoading(1)
+                setGetEnquiry(0)
+              }
+              else{
+                setEnquiryLoading(0)
+              }
+              }
+            )
+            .catch(error => {
+              console.log(error)
+              // setEnquiryLoading(1)
+            })
+          }
+        }
+        getEnquiryDetails()
+      }
+      
   return (
     <>
     <Header />
@@ -277,10 +285,18 @@ function ProfilePage() {
         
       </Card>
       <Card className="w-full p-0">
-        <CardBody>
+        <CardBody className='flex gap-5 justify-end'>
         <Typography className='font-semibold'>
-          Check the status of your enquiries and soil sample numbers below!
+          Click here to logout -{">"}    
         </Typography>
+        <Button size="sm" color='black' className="flex flex-row items-center gap-2 text-xs text-end" onClick={() => {
+          auth.logout()
+          win.clear()
+          navigate("/")
+        }}>
+                  Logout
+                  <ArrowOutwardIcon sx={{fontSize: 15}}/>
+            </Button>
         </CardBody>
         
       </Card>
@@ -365,12 +381,12 @@ function ProfilePage() {
                     {(() => {
                       if(soil_sample_no!==null){
                         return(
-                          <span>Completed</span>
+                          <span className='text-green-600'>Completed</span>
                         )
                       }
                       else{
                         return(
-                          <span>In Progress</span>
+                          <span className='text-red-600'>In Progress</span>
                         )
                       }
                     })()}
@@ -415,7 +431,7 @@ function ProfilePage() {
             if(soil_sample_no !== null){
               return (
                 <tr key={enquiry_no}>
-                  <td className={`${classes} bg-blue-gray-50/50`}>
+                  <td className={classes}>
                     <Typography variant="small" color="blue-gray" className=" max-w-20 font-normal">
                       {enquiry_no}
                     </Typography>

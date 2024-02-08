@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from 'react-router-dom';
 import '../styles.css'
+import { useAuth } from "../../utils/auth";
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  const auth = useAuth();
+  const win = window.sessionStorage;
+  useEffect(() => {
+    if(win.getItem('email')!==null && auth.user === null){
+      auth.login(win.getItem('email'))
+    }
+  }, [])
   return (
     <>
       <nav className="h-10 relative self-center flex flex-wrap items-center justify-between px-4 bg-green-600 w-full">
@@ -34,17 +42,47 @@ export default function Navbar({ fixed }) {
             >
               Enquiry
             </Link>
-            <Link
-              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
-              to="/signup"
-            >
-              Login/Sign Up
-            </Link>
-            <Link
-              className="text-sm font-bold leading-relaxed inline-block py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
-              to="/adminlogin"
-            > Admin
-            </Link>
+            {(()=>{
+              if(auth.user===null){
+                return (
+                  <>
+                  <Link
+                    className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+                    to="/signup"
+                  >
+                    Login/Sign Up
+                  </Link>
+                  <Link
+                    className="text-sm font-bold leading-relaxed inline-block py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+                    to="/adminlogin"
+                  > Admin
+                  </Link>
+                  </>
+                );
+              }
+              else if(auth.user && win.getItem('type') === 'user'){
+                return(
+                <Link
+                    className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+                    to="/profile"
+                  >
+                    Profile
+                  </Link>
+                );
+              }
+              else if(auth.user && win.getItem('type') === 'admin'){
+                return(
+                <Link
+                    className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+                    to="/adminprofile"
+                  >
+                    Profile
+                  </Link>
+                );
+              }
+            })()}
+            
+            
             </div>
           {/* <div
             className={

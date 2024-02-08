@@ -11,12 +11,15 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
+import { useAuth } from '../../utils/auth';
 function AdminLogin() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [verified, setVerified] = useState(0)
     const [errorMessage, setErrorMessage] = useState('')
+    const auth = useAuth();
+    const win = window.sessionStorage;
     function checkUser(){
         axios.post('http://localhost:8000/api/admins/', { 
             email : email,
@@ -25,6 +28,9 @@ function AdminLogin() {
         .then(response => {
           const responseData = response.data;
           if(responseData['Success']!=null){
+            win.setItem('email', email)
+            win.setItem('type','admin')
+            auth.login(email)
             navigate('/adminprofile')
           }
         })

@@ -11,20 +11,20 @@ function Homepage(props) {
     <>
       <Header />
       <Navbar />
-      <div className="flex justify-center w-fill">
+      <div className="flex flex-col justify-center w-fill bg-homepagebg bg-no-repeat bg-center">
         {/* <div
           className="bg-cover bg-scroll self-center bg-center h-52 w-48"
           style={{
             backgroundImage: `url(${logoURL})`,
           }}
         > */}
-        <img src={logoURL} className="absolute mt-20 z-0 h-52 w-48" alt='logo'/>
+        {/* <img src={logoURL} className="absolute mt-20 z-0 h-52 w-48" alt='logo'/> */}
                 
-        <div className="absolute self-start w-fill text-center pt-5"> 
+        <div className="block w-fill text-center py-10"> 
             <h1 className='font-bold text-lg'>Soil Nutrient Analyzer</h1>
         </div>
-        <div className='block'>
-        <div className="block flex-start w-4/6 mt-10 text-justify justify-start float-left px-10 pt-10"> 
+        <div className='flex'>
+        <div className="block flex-start w-4/6 text-justify justify-start float-left px-10"> 
             <p><span className='self-left'>&nbsp; In the realm of modern agriculture, soil nutrient analysis stands as 
             a cornerstone process for understanding and optimizing land productivity. At the heart of this method 
             lies a detailed evaluation of soil composition and fertility, facilitated by specialized analyzers or 
@@ -34,7 +34,7 @@ function Homepage(props) {
             levels were meticulously determined during this assessment. Advanced equipment or trained professionals 
             perform these analyses, generating comprehensive reports detailing the nutrient composition.</span></p>
         </div>
-        <div className="block w-2/6 mt-20 text-center justify-center float-right pr-10">
+        <div className="block w-2/6 text-center justify-center float-right pr-10">
             <div className="block bg-cyan-100 p-2 py-4"> 
                 <h1 className='font-medium text-m text-base'>Soil Health Card</h1>
                 <p className='text-m mt-5'>
@@ -53,12 +53,12 @@ function Homepage(props) {
             </div>
         </div>
         </div>
-        <div className='absolute mt-80 z-1 justify-start h-1/4 w-fit py-5 px-2'>
+        <div className='block z-1 justify-start h-1/4 w-fit py-5 px-2'>
             <img src={image} className ="overflow-hidden" alt = "TN Resources"></img>
         </div>
         {/* </div> */}
       </div>
-      <Footer  footerMargin = {props.footerMargin}/>
+      <Footer />
     </>
   )
 }
