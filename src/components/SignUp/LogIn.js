@@ -51,7 +51,7 @@ function LogIn() {
 
                 <Card color="transparent" shadow={false} className=''>
                     <Typography variant="h3" color="blue-gray" className='text-2xl self-center'>
-                        Log In
+                        Enquiry Log In
                     </Typography>
                     <Typography color="gray" className="mt-1 font-normal text-md self-center">
                         Log in to view your soil heath card!
@@ -61,7 +61,7 @@ function LogIn() {
                             if(verified === 0){
                                 return (
                                     <div className='text-end font-semibold text-sm text-red-700'>
-                                        *{errorMessage}
+                                        {errorMessage}
                                     </div>
                                 )
                             }
@@ -103,8 +103,8 @@ function LogIn() {
                             </Button>
 
                         <Typography color="gray" className="mt-4 text-center font-normal">
-                            Click here for admin login {"->"}{" "}
-                            <Link to="/adminlogin" className='underline font-semibold'>Admin</Link>   
+                            Click here for farmer login {"->"}{" "}
+                            <Link to="/farmer-login" className='underline font-semibold'>Login</Link>   
                         </Typography>
                     </form>
                 </Card>

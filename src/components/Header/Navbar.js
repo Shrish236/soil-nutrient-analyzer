@@ -21,12 +21,30 @@ export default function Navbar({ fixed }) {
             >
               Home
             </Link>
-            <Link
+            <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/aboutus"
+            >
+              About Us
+            </Link>
+            <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/vision-mission"
+            >
+              Vision & Mission
+            </Link>
+            <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/soil-testing"
+            >
+              Soil Testing
+            </Link>
+            {/* <Link
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
               to="/cardform"
             >
               Soil Health Card
-            </Link>
+            </Link> */}
             {/* <button
               className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"
               type="button"

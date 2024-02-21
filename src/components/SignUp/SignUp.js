@@ -74,7 +74,7 @@ function SignUp() {
 
             <Card color="transparent" shadow={false} className=''>
                 <Typography variant="h3" color="blue-gray" className='text-2xl self-center'>
-                    Sign Up
+                Enquiry Sign Up
                 </Typography>
                 <Typography color="gray" className="mt-1 font-normal self-center">
                     Nice to meet you! Enter your details to register.
@@ -160,6 +160,12 @@ function SignUp() {
                     Already have an account?{" "}
                     <Link to="/login" className="font-medium text-gray-900 underline">
                         Log In
+                    </Link>
+                    </Typography>
+                    <Typography color="gray" className="mt-2 text-center font-normal">
+                    Looking for farmer registration?{" "}
+                    <Link to="/farmer-registration" className="font-medium text-gray-900 underline">
+                        Click Here
                     </Link>
                     </Typography>
                 </form>

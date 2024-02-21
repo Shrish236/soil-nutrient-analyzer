@@ -29,6 +29,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     '192.168.56.1',
+    '192.168.0.177'
 ]
 
 
@@ -63,7 +64,8 @@ MIDDLEWARE = [
 # CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
   'http://localhost:3000',
-  'http://192.168.56.1:3000'
+  'http://192.168.56.1:3000',
+  'http://192.168.0.177:8000'
 ]
 
 CORS_ALLOW_METHODS = [

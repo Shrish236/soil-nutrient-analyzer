@@ -11,41 +11,73 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import LoadingScreen from '../Loading/LoadingScreen';
 import { Link } from 'react-router-dom';
+import { redirect } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 function CardPage() {
   const { sampleNumber } = useParams()
   const [responseData, setResponseData] = useState({});
   const [isLoaded, setIsLoaded] = useState(0)
+  const [request, setRequest] = useState(0)
+  const navigate = useNavigate()
   useEffect(() => {
-    const params = {
-      soil_sample_no : sampleNumber
-    }
-    axios.get('http://localhost:8000/api/soilcard', { params })
-    .then(response => {
-      const responseData = response.data;
-      console.log(responseData)
-      if(responseData.length===0){
-        setIsLoaded(2)
+    function getDetails(){
+      const params = {
+        soil_sample_no : sampleNumber,
       }
-      else{
-        let tempDictionary = {};
+      if(request === 0) {
+        axios.get('http://localhost:8000/api/soilcard', { params:params, responseType: 'blob' })
+      .then(response => {
+        // const responseData = response.data;
+        // console.log(responseData)
+        // if(responseData.length===0){
+        //   setIsLoaded(2)
+        // }
+        // else{
+        //   let tempDictionary = {};
 
-        responseData.forEach(item => {
-          
-          const field = item['_field'];
-          tempDictionary[field] = item;
-          // console.log(tempDictionary['Boron']['_field'])
-        });
-        // console.log(tempDictionary)
-        setResponseData(tempDictionary);
-        setIsLoaded(3)
-        // console.log(responseData['Boron'])
+        //   responseData.forEach(item => {
+            
+        //     const field = item['_field'];
+        //     tempDictionary[field] = item;
+        //     // console.log(tempDictionary['Boron']['_field'])
+        //   });
+        //   // console.log(tempDictionary)
+        //   setResponseData(tempDictionary);
+        //   setIsLoaded(3)
+        //   // console.log(responseData['Boron'])
+      // }
+              console.log(response.data)
+              const pdfBlob = new Blob([response.data], { type: 'application/pdf' });
+              // Create a temporary URL for the Blob
+              const url = window.URL.createObjectURL(pdfBlob);
+              // Create a link element
+              const link = document.createElement('a');
+              link.href = url;
+              link.setAttribute('download', 'results.pdf');
+              // Append the link to the body
+              document.body.appendChild(link);
+              // Trigger the download
+              link.click();
+              // Clean up
+              document.body.removeChild(link);
+              setRequest(1)
+              alert("View the downloads folder to see the results document!")
+              navigate("/cardform")
+        
+      })
+      .catch(error => {
+        setIsLoaded(1)
+        console.log(error)
+      })
       }
-    })
-    .catch(error => {
-      setIsLoaded(1)
-      console.log(error)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }
+    if(isLoaded === 0){
+      if(request === 0){
+        setRequest(1)
+        getDetails()
+      }
+    }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
     const TABLE_HEAD1 = ["S.No", "Nutrient", "Units", "Tested Value", "Threshold Value", "Rating"];
