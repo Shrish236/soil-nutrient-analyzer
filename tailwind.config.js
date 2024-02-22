@@ -20,7 +20,7 @@ module.exports = withMT({
         'mvbg':"url('/src/assets/mission-vision-bg.jpg')",
         'soiltestingbg':"url('/src/assets/soiltestingbg.jpg')",
         'contactusbg':"url('/src/assets/contactusbg.jpg')",
-        'farmerregbg':"url('/src/assets/farmerregbg.jpg')",
+        'farmerregbg':"url('/src/assets/farmerregbg.png')",
         'farmerloginbg':"url('/src/assets/farmerloginbg.jpg')"
       },
     },

@@ -19,6 +19,10 @@ function FarmerSignUp() {
     const [mobile, setMobile] = useState('')
     const [password, setPassword] = useState('')
     const [soilType, setSoilType] = useState('')
+    const [district, setDistrict] = useState('')
+    const [taluk, setTaluk] = useState('')
+    const [village, setVillage] = useState('')
+    const [surveyNo, setSurveyNo] = useState('')
     const [isValid, setIsValid] = useState(false)
     function handleSubmit(){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -232,7 +236,72 @@ function FarmerSignUp() {
                     </div>
                     </div>
                     </div>
-                    <Button className="mt-6" fullWidth>
+                    <div className='w-auto'>
+                        <div className="mb-1 mt-1 flex flex-col gap-4 w-11/12">
+                        <Typography color="red" className="mt-1 font-normal">
+                            *Refer Patta document of the land to enter the following details
+                        </Typography>
+                        <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                            District:
+                        </Typography>
+                        <Input
+                            size="lg"
+                            maxLength={50}
+                            placeholder="Eg: Chennai"
+                            className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
+                            value={district}
+                            onChange={(data) => {setDistrict(data.target.value)}}
+                            labelProps={{
+                            className: "before:content-none after:content-none",
+                            }}
+                        />
+                        <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                            Taluk:
+                        </Typography>
+                        <Input
+                            maxLength={50}
+                            size="lg"
+                            placeholder="Eg: Maduravoyal"
+                            className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                            value={taluk}
+                            onChange={(data) => {setTaluk(data.target.value)}}
+                            labelProps={{
+                            className: "before:content-none after:content-none",
+                            }}
+                        />
+                        <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                            Village/Town:
+                        </Typography>
+                        <Input
+                            maxLength={50}
+                            size="lg"
+                            placeholder="Eg: Porur"
+                            className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                            value={village}
+                            onChange={(data) => {setVillage(data.target.value)}}
+                            labelProps={{
+                            className: "before:content-none after:content-none",
+                            }}
+                        />
+                        <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                            Survey No:
+                        </Typography>
+                        <Input
+                            maxLength={50}
+                            size="lg"
+                            placeholder="Eg: 224/2A (Survey field/ Sub division)"
+                            className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                            value={surveyNo}
+                            onChange={(data) => {setSurveyNo(data.target.value)}}
+                            labelProps={{
+                            className: "before:content-none after:content-none",
+                            }}
+                        />
+                        </div>
+                    </div>
+                    <Button className="mt-6" fullWidth onClick={()=>{
+                        alert("Farmer account created successfully!")
+                    }}>
                     Sign up
                     </Button>
                     <Typography color="gray" className="mt-4 text-center font-normal">

@@ -99,6 +99,9 @@ function FarmerLogin() {
                         </div>
 
                             <Button className="mt-6" fullWidth onClick={()=>{
+                                win.setItem('email', 'ramesh123@gmail.com')
+                                win.setItem('type', 'user')
+                                auth.login('ramesh123@gmail.com')
                                 navigate('/farmer-profile')
                             }}>
                                 Submit

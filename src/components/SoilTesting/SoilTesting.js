@@ -82,7 +82,7 @@ function SoilTesting() {
                                 color={activeStep === 0 ? "blue-gray" : "gray"}
                                 className="font-normal text-center"
                                 >
-                                Create account
+                                Make Enquiry
                                 </Typography>
                             </div>
                             </Step>
@@ -99,7 +99,7 @@ function SoilTesting() {
                                 color={activeStep === 1 ? "blue-gray" : "gray"}
                                 className="font-normal"
                                 >
-                                Make an enquiry
+                                Sample Collection
                                 </Typography>
                             </div>
                             </Step>
@@ -120,6 +120,7 @@ function SoilTesting() {
                                 </Typography>
                             </div>
                             </Step>
+                            
                         </Stepper>
                         <div className="mt-12 flex justify-between">
                             {/* <Button onClick={handlePrev} disabled={isFirstStep}>
