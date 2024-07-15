@@ -22,7 +22,7 @@ function LogIn() {
     const win = window.sessionStorage;
     const auth = useAuth();
     function checkUser(){
-        axios.post('http://localhost:8000/api/users/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/users/', { 
             email : email,
             password : password
         })

@@ -109,7 +109,7 @@ function ProfilePage() {
         const params = {
           email : auth.user === null? win.getItem('email') : auth.user
         }
-        axios.get('http://localhost:8000/api/admins/', { params })
+        axios.get('https://soilanalyser.pythonanywhere.com/api/admins/', { params })
         .then(response => {
           const responseData = response.data;
           console.log(responseData)
@@ -150,7 +150,7 @@ function ProfilePage() {
     else if(isLoading === 2){
       if(getEnquiry===1){
         function getEnquiryDetails(){
-          axios.get('http://localhost:8000/api/enquiries/')
+          axios.get('https://soilanalyser.pythonanywhere.com/api/enquiries/')
           .then(response => {
             const responseData = response.data;
             console.log(responseData)
@@ -324,7 +324,7 @@ function ProfilePage() {
           </tr>
         </thead>
         <tbody>
-          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village }, index) => {
+          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village, type}, index) => {
             const isLast = index === enquiry.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
             const statusColor = soil_sample_no === null ? 'bg-red-100' : 'bg-green-100' 
@@ -369,9 +369,20 @@ function ProfilePage() {
                         )
                       }
                       else{
+                        if(type === 'Soil Testing at Laboratory'){
                         return(
-                          <span className='text-red-600'>In Progress</span>
+                        
+                          <span className='text-red-600'> Testing In Progress</span>
+                          
                         )
+                      }
+                      else{
+                        return(
+                        
+                          <span className='text-red-600'>Soil Database Enquiry</span>
+                          
+                        )
+                      }
                       }
                     })()}
                   </Typography>

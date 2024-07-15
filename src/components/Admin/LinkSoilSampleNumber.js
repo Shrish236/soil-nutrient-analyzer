@@ -26,7 +26,7 @@ function LinkSoilSampleNumber() {
     const [verified, setVerified] = useState(0)
     const [errorMessage, setErrorMessage] = useState('')
     function linkNumber(){
-        axios.post('http://localhost:8000/api/enquiries/update/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/enquiries/update/', { 
             enquiry_no : enquiryNumber,
             soil_sample_no : sampleNumber
         })

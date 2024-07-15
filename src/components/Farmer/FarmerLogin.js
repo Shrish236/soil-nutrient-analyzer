@@ -23,7 +23,7 @@ function FarmerLogin() {
     const auth = useAuth();
     function checkUser(){
         var mobileno = email
-        axios.post('http://localhost:8000/api/farmers/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/farmers/', { 
             mobile : mobileno,
             password : password
         })

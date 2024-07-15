@@ -29,7 +29,7 @@ function EnquiryForm() {
     const [sectionOpen, setSectionOpen] = useState(false)
     useEffect(()=>{
         console.log(enquirytype)
-        if(enquirytype === "Soil Testing at Laboratory"){
+        if(enquirytype === "Soil Testing at Laboratory" || enquirytype === "Farmer Testing"){
             setSectionOpen(true)
             console.log(sectionOpen)
         }
@@ -38,7 +38,7 @@ function EnquiryForm() {
         }
     },[enquirytype])
     function postData(){
-        axios.post('http://localhost:8000/api/enquiries/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/enquiries/', { 
             name: name,
             email: email,
             mobile: mobile,
@@ -52,7 +52,12 @@ function EnquiryForm() {
         const responseData = response.data;
         if(responseData['name']!=null){
             alert('Enquiry submitted!')
-            navigate('/profile')
+            if(win.getItem('type') === 'farmer'){
+                navigate('/farmer-profile')
+            }
+            else{
+                navigate('/profile')
+            }
             return true
         }
         })
@@ -113,7 +118,7 @@ function EnquiryForm() {
                     }}
                 />
                 <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                    email
+                    Email
                 </Typography>
                 <Input
                     size="lg"
@@ -149,6 +154,7 @@ function EnquiryForm() {
                     }} value={enquirytype}>
                         <Option value='Soil Testing at Laboratory'>Soil Testing at Laboratory</Option>
                         <Option value='Request System Soil Database'>Request System Soil Database</Option>
+                        <Option value='Farmer Testing'>Farmer Testing</Option>
                 </Select>
                 {(()=>{
                     console.log(sectionOpen + "2")

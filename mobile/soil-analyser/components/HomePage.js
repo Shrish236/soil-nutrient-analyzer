@@ -194,12 +194,25 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
                 <Text style={{
                   marginTop:10,
                   fontSize:15,
+                  marginBottom:10,
                   fontWeight: '500'
                 }}>Searching for admin login?  <Text style={{
                   textDecorationLine:'underline',
                   color:'purple',
                   fontStyle: 'italic'
                 }}>Admin Login</Text></Text></Pressable>
+                <Pressable onPress={() => {
+                  navigator.navigate("farmer-signup")
+                }}>
+                <Text style={{
+                  marginTop:10,
+                  fontSize:15,
+                  fontWeight: '500'
+                }}>Farmer Sign Up - <Text style={{
+                  textDecorationLine:'underline',
+                  color:'purple',
+                  fontStyle: 'italic'
+                }}>Click Here</Text></Text></Pressable>
               </View>
               </KeyboardAvoidingView>
               </TouchableWithoutFeedback>

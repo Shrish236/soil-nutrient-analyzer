@@ -30,7 +30,7 @@ function FarmerSignUp() {
     const [isValid, setIsValid] = useState(false)
     const [isValid2, setIsValid2] = useState(false)
     function postData(){
-        axios.post('http://localhost:8000/api/farmers/new/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/farmers/new/', { 
             name: name,
             address: address,
             aadhar: aadhar,

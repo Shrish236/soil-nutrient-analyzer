@@ -21,7 +21,7 @@ function AdminLogin() {
     const auth = useAuth();
     const win = window.sessionStorage;
     function checkUser(){
-        axios.post('http://localhost:8000/api/admins/', { 
+        axios.post('https://soilanalyser.pythonanywhere.com/api/admins/', { 
             email : email,
             password : password
         })

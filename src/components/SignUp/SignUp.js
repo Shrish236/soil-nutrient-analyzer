@@ -44,7 +44,7 @@ function SignUp() {
         }
 
         if(isValid){
-            axios.post('http://localhost:8000/api/users/new/', { 
+            axios.post('https://soilanalyser.pythonanywhere.com/api/users/new/', { 
                 email : email,
                 name: name,
                 mobile: mobile,

@@ -18,6 +18,8 @@ import AdminLogin from './components/Admin/AdminLogin';
 import AdminHome from './components/Admin/AdminHome';
 import EditProfile from './components/EditProfile';
 import AdminEnquiries from './components/Admin/AdminEnquiries';
+import FarmerSignUp from './components/FarmerSignUp';
+import FarmerLogin from './components/FarmerLogin';
 import { useNavigation } from '@react-navigation/native';
 import Logout from './components/Logout';
 const Stack = createNativeStackNavigator()
@@ -29,6 +31,18 @@ export default function App() {
         <Stack.Screen name="home" component={Homepage} options={{ headerShown: false, headerBackTitle:false }}/>
         <Stack.Screen name="signup" component={SignUp} options={{ 
           title: 'Sign Up',
+          headerStyle: {
+            backgroundColor: '#1E1E1D',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          
+        }
+          }/>
+          <Stack.Screen name="farmer-signup" component={FarmerSignUp} options={{ 
+          title: 'Farmer Sign Up',
           headerStyle: {
             backgroundColor: '#1E1E1D',
           },
@@ -103,6 +117,18 @@ export default function App() {
           }/>
           <Stack.Screen name="admin-login" component={AdminLogin} options={{ 
           title: 'Admin',
+          headerStyle: {
+            backgroundColor: '#1E1E1D',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          
+        }
+          }/>
+          <Stack.Screen name="farmer-login" component={FarmerLogin} options={{ 
+          title: 'Farmer Login',
           headerStyle: {
             backgroundColor: '#1E1E1D',
           },

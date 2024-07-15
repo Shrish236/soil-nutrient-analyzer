@@ -7,6 +7,7 @@ const logoURL = require('../assets/TN-logo-3.png')
 const BgURL = require('../assets/aboutusbg.jpg')
 const AUImage = require('../assets/AnnaUniversity-Front.jpg')
 const CIoTImage = require('../assets/Ciot-1.jpeg')
+const TaniiImage = require('../assets/tanii-pic.jpeg')
 const AboutUs = () => {
   return (
     <ScrollView>
@@ -19,6 +20,70 @@ const AboutUs = () => {
             alignItems: 'center',
             marginBottom:20
         }}>
+             <View style={{
+                flexDirection:'row',
+                justifyContent:'center'
+            }}>
+        <Card
+            elevation={5}
+            style={{
+                'width': width/1.1,
+                backgroundColor:'#E5D4F5',
+                marginTop:height/25,
+            }}
+        >
+            
+            <Card.Title title="About TANII Project" titleStyle={{
+                fontWeight: 'bold',
+                fontSize: 18,
+                textAlign: 'center',
+                paddingTop: 20
+            }}/>
+            <ImageBackground source={logoURL} resizeMode="center" imageStyle={{ justifyContent:'center', alignItems:'center'}}>
+            <Card.Content style={{
+                padding: 10,
+                justifyContent: 'center',
+                alignItems:'center',
+                alignSelf:'center'
+            }}>
+            <Image source={TaniiImage} style={{
+                height:height/4,
+                width:2*width/3,
+                borderRadius:5
+            }}></Image>
+            <Text style={{
+                textAlign: 'justify',
+                lineHeight:22,
+                paddingTop:10,
+                paddingHorizontal:10
+            }}>
+                &nbsp;&nbsp;&nbsp;&nbsp;The Department of Horticulture and Plantation Crops (DoHPC), Government of Tamilnadu has 
+                sanctioned a project titled, “Design and Development of Internet of Things (IoT) enabled portable soil nutrient 
+                measurement system” at a total cost of Rs. 227.378 lakh for a period of three years (25.02.2021 to 24.02.2024) 
+                under Tamilnadu Innovative Initiative (TANII) state innovation fund. Out of which, a sum of Rs. 153.23 lakh 
+                has been received, as the first instalment and Rs.38.226 has been received as second installment. The primary
+                objective of the TANII Project is to  design and develop a real time, portable soil nutrient measurement system 
+                (Macronutrients – N, P, K; Micronutrients – B, S, Ca, Mg, Fe, Cu, Zn, Mn). Other objectives include 
+                development of a  web/mobile app to aid the farmer before initiating the cultivation process.
+            </Text>
+            {/* <Pressable onPress={()=>{
+                Linking.openURL("https://annauniv.edu")
+                .catch(err => console.error('An error occurred', err));
+            }}>
+                <Text style={{
+                    color:'purple',
+                    textDecorationLine:'underline',
+
+                }}>Read More</Text>
+            </Pressable> */}
+            
+            </Card.Content>
+            
+            </ImageBackground>
+            {/* <Card.Cover source={{ uri: 'https://picsum.photos/700' }} /> */}
+            
+        </Card>
+        </View>
             <View style={{
                 flexDirection:'row',
                 justifyContent:'center'
@@ -134,6 +199,7 @@ const AboutUs = () => {
             
         </Card>
         </View>
+        
         </View>
         </ImageBackground>
     </ScrollView>

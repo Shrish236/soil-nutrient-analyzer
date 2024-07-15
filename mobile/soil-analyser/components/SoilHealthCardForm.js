@@ -494,7 +494,7 @@ const SoilHealthCardForm = () => {
      
       setLoading(true);
       try {
-        const response = await axios.post('http://192.168.0.177:80/api/soilcard/', {
+        const response = await axios.post('http://192.168.213.114:8000/api/soilcard/', {
           soil_sample_no : name
         });
   

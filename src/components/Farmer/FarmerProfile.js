@@ -108,7 +108,7 @@ function FarmerProfile() {
         const params = {
           mobile : auth.user === null? win.getItem('email') : auth.user
         }
-        axios.get('http://localhost:8000/api/farmers/', { params })
+        axios.get('https://soilanalyser.pythonanywhere.com/api/farmers/', { params })
         .then(response => {
           const responseData = response.data;
           console.log(responseData)
@@ -130,7 +130,7 @@ function FarmerProfile() {
           const params = {
             mobile : auth.user === null? win.getItem('email') : auth.user
           }
-          axios.get('http://localhost:8000/api/enquiries/', { params })
+          axios.get('https://soilanalyser.pythonanywhere.com/api/enquiries/', { params })
           .then(response => {
             const responseData = response.data;
             console.log(responseData)
@@ -436,12 +436,12 @@ function FarmerProfile() {
           </tr>
         </thead>
         <tbody>
-          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village}, index) => {
+          {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village, type}, index) => {
             const isLast = index === enquiry.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
             const statusColor = soil_sample_no === null ? 'bg-red-100' : 'bg-green-100'
             console.log(district)
-            if(1){
+            if(type === 'Farmer Testing'){
               return (
                 <tr key={enquiry_no} className={statusColor}>
                   {/* <td className={classes}>
