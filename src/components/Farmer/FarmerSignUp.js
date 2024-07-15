@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Card,
     Input,
@@ -15,28 +15,118 @@ function FarmerSignUp() {
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [address, setAddress] = useState('')
-    const [email, setEmail] = useState('')
+    const [aadhar, setAadhar] = useState('')
     const [mobile, setMobile] = useState('')
     const [password, setPassword] = useState('')
     const [soilType, setSoilType] = useState('')
+    const [prevCrop, setPrevCrop] = useState('')
+    const [plannedCrop, setPlannedCrop] = useState('')
+    const [waterBody, setWaterBody] = useState('')
+    const [area, setArea] = useState('')
     const [district, setDistrict] = useState('')
     const [taluk, setTaluk] = useState('')
     const [village, setVillage] = useState('')
     const [surveyNo, setSurveyNo] = useState('')
     const [isValid, setIsValid] = useState(false)
+    const [isValid2, setIsValid2] = useState(false)
+    function postData(){
+        axios.post('http://localhost:8000/api/farmers/new/', { 
+            name: name,
+            address: address,
+            aadhar: aadhar,
+            mobile: mobile,
+            password : password,
+            soiltype: soilType,
+            previouscrop: prevCrop,
+            plannedcrop: plannedCrop,
+            landarea: area,
+            waterbody: waterBody,
+            district: district,
+            taluk: taluk,
+            village: village,
+            survey_no: surveyNo
+        })
+        .then(response => {
+        const responseData = response.data;
+        if(responseData['name']!=null){
+            alert('Account created successfully! Login now ->')
+            navigate('/farmer-login')
+        }
+        })
+        .catch(error => {
+            console.log(error)
+            alert(error.response.data['error'])
+        })
+    }
     function handleSubmit(){
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const mobileRegex = /^[0-9]{10}$/;
+        const aadharRegex = /^[0-9]{12}$/;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+{};:,<.>]).{8,}$/;
 
-        // Email validation
-        if (!emailRegex.test(email)) {
-            alert('Enter correct email address')
+        if(mobile === ''){
+            alert('Enter Mobile Number!')
+            setIsValid(false)
+        }
+        else if(name === ''){
+            alert('Enter Name!')
+            setIsValid(false)
+        }
+        else if(address === ''){
+            alert('Enter Address!')
+            setIsValid(false)
+        }
+        else if(aadhar === ''){
+            alert('Enter Aadhar Number!')
+            setIsValid(false)
+        }
+        else if(password === ''){
+            alert('Enter password!')
+            setIsValid(false)
+        }
+        else if(soilType === ''){
+            alert('Select Soil Type!')
+            setIsValid(false)
+        }
+        else if(prevCrop === ''){
+            alert('Enter Previously Sowed Crop!')
+            setIsValid(false)
+        }
+        else if(plannedCrop === ''){
+            alert('Enter Planned Crop for Next Harvest!')
+            setIsValid(false)
+        }
+        else if(waterBody === ''){
+            alert('Enter Primary Water Source!')
+            setIsValid(false)
+        }
+        else if(area === ''){
+            alert('Enter Area!')
+            setIsValid(false)
+        }
+        else if(district === ''){
+            alert('Enter District!')
+            setIsValid(false)
+        }
+        else if(taluk === ''){
+            alert('Enter Taluk!')
+            setIsValid(false)
+        }
+        else if(village === ''){
+            alert('Enter Village!')
+            setIsValid(false)
+        }
+        else if(surveyNo === ''){
+            alert('Enter Survey Number!')
             setIsValid(false)
         }
         // Mobile validation
         else if (!mobileRegex.test(mobile)) {
             alert('Enter correct Mobile Number')
+            setIsValid(false)
+        }
+        else if (!aadharRegex.test(aadhar)) {
+            alert('Enter correct Aadhar Number')
             setIsValid(false)
         }
 
@@ -46,27 +136,7 @@ function FarmerSignUp() {
             setIsValid(false)
         }
         else{
-            setIsValid(true)
-        }
-
-        if(isValid){
-            axios.post('http://localhost:8000/api/users/new/', { 
-                email : email,
-                name: name,
-                mobile: mobile,
-                address: address,
-                password : password
-            })
-            .then(response => {
-            const responseData = response.data;
-            if(responseData['name']!=null){
-                alert('Account created successfully! Login now ->')
-                navigate('/login')
-            }
-            })
-            .catch(error => {
-                console.log(error)
-            })
+            postData()
         }
     }
    return (
@@ -92,7 +162,7 @@ function FarmerSignUp() {
                     <div className='w-auto'>
                     <div className="mb-1 flex flex-col gap-4">
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Your Name
+                        Your Name *
                     </Typography>
                     <Input
                         size="lg"
@@ -106,7 +176,7 @@ function FarmerSignUp() {
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Your Address
+                        Your Address *
                     </Typography>
                     <Input
                         size="lg"
@@ -120,21 +190,21 @@ function FarmerSignUp() {
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Your Aadhar
+                        Your Aadhar No *
                     </Typography>
                     <Input
                         size="lg"
-                        maxLength={50}
-                        placeholder="name@mail.com"
+                        maxLength={12}
+                        placeholder="100100001001"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
-                        value={email}
-                        onChange={(data) => {setEmail(data.target.value)}}
+                        value={aadhar}
+                        onChange={(data) => {setAadhar(data.target.value)}}
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Your Mobile
+                        Your Mobile *
                     </Typography>
                     <Input
                         size="lg"
@@ -148,7 +218,7 @@ function FarmerSignUp() {
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Password
+                        Password *
                     </Typography>
                     <Input
                         type="password"
@@ -167,67 +237,66 @@ function FarmerSignUp() {
                     <div className='w-auto'>
                     <div className="mb-1 flex flex-col gap-4">
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Type of Soil
+                        Type of Soil *
                     </Typography>
-                    <Select variant="outlined" className="bg-gray-100" label="Soil Type" size="md" color='black' onChange={(val) => {
+                    <Select variant="outlined" className="bg-gray-100" label="Soil Type" size="md" defaultValue="Red Soil" color='black' onChange={(val) => {
                         setSoilType(val)
                     }} value={soilType}>
-                        <Option>Sandy - Loamy</Option>
-                        <Option>Red Soil</Option>
+                        <Option value="Sandy - Loamy">Sandy - Loamy</Option>
+                        <Option value='Red Soil'>Red Soil</Option>
                     </Select>
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Previous Crop
+                        Previous Crop *
                     </Typography>
                     <Input
                         size="lg"
                         maxLength={100}
-                        placeholder="House No, Street, Locality, District, Pincode"
+                        placeholder="Eg: Paddy"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        value={address}
-                        onChange={(data) => {setAddress(data.target.value)}}
+                        value={prevCrop}
+                        onChange={(data) => {setPrevCrop(data.target.value)}}
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Planned Crop
+                        Planned Crop *
                     </Typography>
                     <Input
                         size="lg"
                         maxLength={50}
-                        placeholder="name@mail.com"
+                        placeholder="Eg: Brinjal"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
-                        value={email}
-                        onChange={(data) => {setEmail(data.target.value)}}
+                        value={plannedCrop}
+                        onChange={(data) => {setPlannedCrop(data.target.value)}}
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Land Area (Hectares)
+                        Land Area (Hectares) *
                     </Typography>
                     <Input
                         size="lg"
                         maxLength={10}
-                        placeholder="1234567891"
+                        placeholder="Eg: 100"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
-                        value={mobile}
-                        onChange={(data) => {setMobile(data.target.value)}}
+                        value={area}
+                        onChange={(data) => {setArea(data.target.value)}}
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}
                     />
                     <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                        Water Body Used
+                        Primary Water Body Used *
                     </Typography>
                     <Input
-                        type="password"
                         maxLength={50}
                         size="lg"
-                        placeholder="********"
+                        placeholder="Eg: Rainwater"
                         className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
-                        value={password}
-                        onChange={(data) => {setPassword(data.target.value)}}
+                        value={waterBody}
+                        onChange={(data) => {setWaterBody(data.target.value)}}
                         labelProps={{
                         className: "before:content-none after:content-none",
                         }}
@@ -242,7 +311,7 @@ function FarmerSignUp() {
                             *Refer Patta document of the land to enter the following details
                         </Typography>
                         <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                            District:
+                            District *
                         </Typography>
                         <Input
                             size="lg"
@@ -256,7 +325,7 @@ function FarmerSignUp() {
                             }}
                         />
                         <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                            Taluk:
+                            Taluk *
                         </Typography>
                         <Input
                             maxLength={50}
@@ -270,7 +339,7 @@ function FarmerSignUp() {
                             }}
                         />
                         <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                            Village/Town:
+                            Village/Town *
                         </Typography>
                         <Input
                             maxLength={50}
@@ -284,7 +353,7 @@ function FarmerSignUp() {
                             }}
                         />
                         <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                            Survey No:
+                            Survey No *
                         </Typography>
                         <Input
                             maxLength={50}
@@ -299,9 +368,7 @@ function FarmerSignUp() {
                         />
                         </div>
                     </div>
-                    <Button className="mt-6" fullWidth onClick={()=>{
-                        alert("Farmer account created successfully!")
-                    }}>
+                    <Button className="mt-6" fullWidth onClick={handleSubmit}>
                     Sign up
                     </Button>
                     <Typography color="gray" className="mt-4 text-center font-normal">

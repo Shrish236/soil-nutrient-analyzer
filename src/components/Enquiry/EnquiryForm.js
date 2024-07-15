@@ -4,14 +4,19 @@ import {
     Input,
     Button,
     Typography,
+    Select, Option
   } from "@material-tailwind/react";
   import Header from '../Header/Header';
   import Navbar from '../Header/Navbar';
   import Footer from '../Footer/Footer';
   import { Link, useNavigate } from 'react-router-dom';
-  import { useState } from 'react';
+  import { useState, useEffect } from 'react';
   import axios from 'axios';
+  import { useAuth } from '../../utils/auth';
 function EnquiryForm() {
+    const win = window.sessionStorage;
+    const auth = useAuth();
+    var email = auth.user === null? win.getItem('email') : auth.user
     const navigate = useNavigate();
     const [name, setName] = useState('')
     const [district, setDistrict] = useState('')
@@ -19,7 +24,42 @@ function EnquiryForm() {
     const [mobile, setMobile] = useState('')
     const [village, setVillage] = useState('')
     const [surveyNo, setSurveyNo] = useState('')
+    const [enquirytype, setEnquirytype] = useState('')
     const [isValid, setIsValid] = useState(false)
+    const [sectionOpen, setSectionOpen] = useState(false)
+    useEffect(()=>{
+        console.log(enquirytype)
+        if(enquirytype === "Soil Testing at Laboratory"){
+            setSectionOpen(true)
+            console.log(sectionOpen)
+        }
+        else{
+            setSectionOpen(false)
+        }
+    },[enquirytype])
+    function postData(){
+        axios.post('http://localhost:8000/api/enquiries/', { 
+            name: name,
+            email: email,
+            mobile: mobile,
+            district: district,
+            taluk: taluk,
+            village: village,
+            survey_no: surveyNo,
+            type: enquirytype
+        })
+        .then(response => {
+        const responseData = response.data;
+        if(responseData['name']!=null){
+            alert('Enquiry submitted!')
+            navigate('/profile')
+            return true
+        }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
     function handleSubmit(){
         // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const mobileRegex = /^[0-9]{10}$/;
@@ -32,28 +72,10 @@ function EnquiryForm() {
         }
         else{
             setIsValid(true)
+            postData()
         }
 
         if(isValid){
-            axios.post('http://localhost:8000/api/enquiries/', { 
-                name: name,
-                mobile: mobile,
-                district: district,
-                taluk: taluk,
-                village: village,
-                survey_no: surveyNo
-            })
-            .then(response => {
-            const responseData = response.data;
-            if(responseData['name']!=null){
-                alert('Enquiry submitted!')
-                navigate('/profile')
-                return true
-            }
-            })
-            .catch(error => {
-                console.log(error)
-            })
             return true
         }
         return false
@@ -91,6 +113,20 @@ function EnquiryForm() {
                     }}
                 />
                 <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                    email
+                </Typography>
+                <Input
+                    size="lg"
+                    maxLength={50}
+                    placeholder="Ashok Kumar"
+                    className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                    value={email}
+                    disabled
+                    labelProps={{
+                    className: "before:content-none after:content-none",
+                    }}
+                />
+                <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
                     Mobile:
                 </Typography>
                 <Input
@@ -104,65 +140,83 @@ function EnquiryForm() {
                     className: "before:content-none after:content-none",
                     }}
                 />
-                <Typography color="red" className="mt-1 font-normal">
-                    *Refer Patta document of the land to enter the following details
-                </Typography>
                 <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                    District:
+                        Enquiry Type
                 </Typography>
-                <Input
-                    size="lg"
-                    maxLength={50}
-                    placeholder="Eg: Chennai"
-                    className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
-                    value={district}
-                    onChange={(data) => {setDistrict(data.target.value)}}
-                    labelProps={{
-                    className: "before:content-none after:content-none",
-                    }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                    Taluk:
-                </Typography>
-                <Input
-                    maxLength={50}
-                    size="lg"
-                    placeholder="Eg: Maduravoyal"
-                    className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    value={taluk}
-                    onChange={(data) => {setTaluk(data.target.value)}}
-                    labelProps={{
-                    className: "before:content-none after:content-none",
-                    }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                    Village/Town:
-                </Typography>
-                <Input
-                    maxLength={50}
-                    size="lg"
-                    placeholder="Eg: Porur"
-                    className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    value={village}
-                    onChange={(data) => {setVillage(data.target.value)}}
-                    labelProps={{
-                    className: "before:content-none after:content-none",
-                    }}
-                />
-                <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
-                    Survey No:
-                </Typography>
-                <Input
-                    maxLength={50}
-                    size="lg"
-                    placeholder="Eg: 224/2A (Survey field/ Sub division)"
-                    className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
-                    value={surveyNo}
-                    onChange={(data) => {setSurveyNo(data.target.value)}}
-                    labelProps={{
-                    className: "before:content-none after:content-none",
-                    }}
-                />
+                <Select variant="outlined" className="bg-gray-100" label="Enquiry" size="md" color='black' defaultValue="Soil Testing at Laboratory" onChange={(val) => {
+                        setEnquirytype(val)
+                        
+                    }} value={enquirytype}>
+                        <Option value='Soil Testing at Laboratory'>Soil Testing at Laboratory</Option>
+                        <Option value='Request System Soil Database'>Request System Soil Database</Option>
+                </Select>
+                {(()=>{
+                    console.log(sectionOpen + "2")
+                    if(sectionOpen == true){
+                        return (<div className='flex flex-col gap-4'>
+                            <Typography color="red" className="mt-1 font-normal">
+                                *Refer Patta document of the land to enter the following details
+                            </Typography>
+                            <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                                District:
+                            </Typography>
+                            <Input
+                                size="lg"
+                                maxLength={50}
+                                placeholder="Eg: Chennai"
+                                className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
+                                value={district}
+                                onChange={(data) => {setDistrict(data.target.value)}}
+                                labelProps={{
+                                className: "before:content-none after:content-none",
+                                }}
+                            />
+                            <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                                Taluk:
+                            </Typography>
+                            <Input
+                                maxLength={50}
+                                size="lg"
+                                placeholder="Eg: Maduravoyal"
+                                className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                value={taluk}
+                                onChange={(data) => {setTaluk(data.target.value)}}
+                                labelProps={{
+                                className: "before:content-none after:content-none",
+                                }}
+                            />
+                            <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                                Village/Town:
+                            </Typography>
+                            <Input
+                                maxLength={50}
+                                size="lg"
+                                placeholder="Eg: Porur"
+                                className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                value={village}
+                                onChange={(data) => {setVillage(data.target.value)}}
+                                labelProps={{
+                                className: "before:content-none after:content-none",
+                                }}
+                            />
+                            <Typography variant="h6" color="blue-gray" className="-mb-3 self-start">
+                                Survey No:
+                            </Typography>
+                            <Input
+                                maxLength={50}
+                                size="lg"
+                                placeholder="Eg: 224/2A (Survey field/ Sub division)"
+                                className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900"
+                                value={surveyNo}
+                                onChange={(data) => {setSurveyNo(data.target.value)}}
+                                labelProps={{
+                                className: "before:content-none after:content-none",
+                                }}
+                            />
+                        </div>);   
+                    }
+                })()}
+                
                 </div>
                 <Button className="mt-6" fullWidth onClick={handleSubmit}>
                 Submit

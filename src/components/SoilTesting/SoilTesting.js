@@ -16,6 +16,7 @@ import {
   BuildingLibraryIcon,
 } from "@heroicons/react/24/outline";
 import { Link } from 'react-router-dom';
+import architecture from '../../assets/project-architecture2.png'
 import img1 from '../../assets/img1.jpeg'
 import img2 from '../../assets/img2.jpeg'
 import img3 from '../../assets/img3.jpeg'
@@ -280,6 +281,16 @@ function SoilTesting() {
                              Accurate measurement of these elements, often referred to as NPK testing, is vital for understanding soil fertility and formulating appropriate fertilizer strategies.
                         </span>
                     </li>
+                    <div className='flex flex-col justify-center py-5'>
+                    <img
+                    src={architecture}
+                    alt="project-architecture"
+                    className="w-auto h-96 object-cover self-center"
+                    />
+                    <Typography className='font-normal italic text-sm text-center'>
+                        Soil Testing Process 
+                    </Typography>
+                    </div>
                     <li>
                         <span>
                             <span className='font-bold'>Enhanced Decision-Making:</span> Real-time, on-site elemental analysis empowers farmers to make informed decisions promptly. 

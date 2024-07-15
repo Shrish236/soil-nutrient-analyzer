@@ -75,7 +75,7 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
       nextBgColor,
     ],
   });
-
+  const ImageURL = require('../assets/cropped_image.png')
   
   return (
     <Animated.View
@@ -86,31 +86,30 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
       ]}
     >
       {(()=>{
-        if(page===0){
-          return(
-            <>
-              <View style={{
-                paddingBottom: height/6,
-                justifyContent: 'center',
-                alignItems:'center',
-              }}>
-              <Image source={imagebg} style={{
-                height: 170,
-                width: 155,
-              }}></Image>
-              <Text style={{ 
-                marginTop: height/12,
-                fontWeight: 'bold',
-                fontSize: 20,
-                color: 'black',
-                textAlign: 'center'
+        // if(page===0){
+        //   return(
+        //     <>
+        //       <View style={{
+        //         paddingBottom: height/6,
+        //         justifyContent: 'center',
+        //         alignItems:'center',
+        //       }}>
+        //       <Image source={imagebg} style={{
+        //         height: 170,
+        //         width: 155,
+        //       }}></Image>
+        //       <Text style={{ 
+        //         marginTop: height/12,
+        //         fontWeight: 'bold',
+        //         fontSize: 20,
+        //         color: 'black',
+        //         textAlign: 'center'
 
-              }}>Soil Nutrient Analyser</Text>
-              </View>
-            </>
-          );
-        }
-        else{
+        //       }}>Soil Nutrient Analyser</Text>
+        //       </View>
+        //     </>
+        //   );
+        // }
           return(
             <>
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -206,13 +205,12 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
               </TouchableWithoutFeedback>
             </>
           );
-        }
       })()}
       <Animated.View
         style={[
           styles.circle,
           {
-            backgroundColor: dotBgColor,
+            backgroundColor: "#DAA520",
             transform: [
               { perspective: 200 },
               {
@@ -239,7 +237,7 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
           },
         ]}
       >
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={onPress} style={{}}>
           <Animated.View
             style={[
               styles.button,
@@ -266,10 +264,15 @@ const Circle = ({ onPress, index, quotes, animatedValue, animatedValue2, page })
               },
             ]}
           >
+            <Image source={ImageURL} style={{
+                                height: height/8,
+                                width:width/4,
+                            }}
+                            />
 
-            <AnimatedAntDesign name='arrowright' size={28} color={'white'} style={{
+            {/* <AnimatedAntDesign name='arrowright' size={28} color={'white'} style={{
               position: 'relative'
-            }} />
+            }} /> */}
           </Animated.View>
         </TouchableOpacity>
       </Animated.View>
@@ -448,6 +451,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
+    // backgroundColor: "#FFFFFF"
   },
   circle: {
     backgroundColor: 'turquoise',

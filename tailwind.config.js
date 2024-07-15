@@ -21,7 +21,9 @@ module.exports = withMT({
         'soiltestingbg':"url('/src/assets/soiltestingbg.jpg')",
         'contactusbg':"url('/src/assets/contactusbg.jpg')",
         'farmerregbg':"url('/src/assets/farmerregbg.png')",
-        'farmerloginbg':"url('/src/assets/farmerloginbg.jpg')"
+        'farmerloginbg':"url('/src/assets/farmerloginbg.jpg')",
+        'infrastructurebg':"url('/src/assets/infrastructure-bg.jpg')",
+        'servicesbg':"url('/src/assets/services-bg.jpg')"
       },
     },
     screens: {

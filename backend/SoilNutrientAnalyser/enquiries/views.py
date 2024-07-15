@@ -10,8 +10,41 @@ from influxdb_client.client.write_api import SYNCHRONOUS
 from django.template.loader import render_to_string
 from .models import Enquiry
 from .serializers import EnquirySerializer
+import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart  
+from email.utils import formataddr
+from email.mime.application import MIMEApplication
 from subprocess import Popen, PIPE
 ca_cert_path = certifi.where()
+
+def callemail(email_id, message_text, message_html, subject):
+    port = 465
+    smtp_server = "smtp.gmail.com"
+    sender_email = "shrishrajamohan@gmail.com"
+    receiver_email = email_id
+    password = "moawhhgpshpidpcr"
+
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = formataddr(('CIoT - Soil Testing', sender_email))
+    message["To"] = receiver_email
+
+    part1 = MIMEText(message_text, "plain")
+    part2 = MIMEText(message_html, "html")
+    message.attach(part1)
+    message.attach(part2)
+
+    # with open(excel_file_path, "rb") as attachment:
+    #     excel_part = MIMEApplication(attachment.read(), _subtype="xlsx")
+    # excel_part.add_header('Content-Disposition', 'attachment', filename=excel_file_path)
+    # message.attach(excel_part)
+
+    context = ssl.create_default_context(cafile=certifi.where())
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message.as_string())
+        print("Email sent! to " + email_id)
 
 class EnquiryListCreateView(generics.ListCreateAPIView):
     queryset = Enquiry.objects.all()
@@ -34,6 +67,34 @@ class EnquiryListCreateView(generics.ListCreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print(request.data)
+            if request.data['type'] == 'Request System Soil Database':
+                subject = "Request for access to Soil Database"
+                message_text = "A user has made a request for access to the Soil Database. Details are as follows \n"
+                message_html = f"""A user has made a request for access to the Soil Database. Details are as follows: <br/> <br/>
+                                <table style='border:1px solid black;'>"""
+                for key, value in request.data.items():
+                    if value != '':
+                        message_text += key + " : " + value + "\n"
+                        message_html += f"""
+                                        <tr>
+                                        <td style='border: 1px solid black; padding: 8px;'><b>{key}</b></td>
+                                        <td style='border: 1px solid black; padding: 8px; width: 350px;'>{value}</td>
+                                        </tr>
+                                        """
+                
+                enquiry_no = serializer.instance.enquiry_no
+                message_text += "Enquiry No : " + str(enquiry_no) + "\nKindly contact the user to move forward!"
+                message_html += f"""
+                                 <tr>
+                                        <td style='border: 1px solid black; padding: 8px;'><b>Enquiry No</b></td>
+                                        <td style='border: 1px solid black; padding: 8px; width: 350px;'>{enquiry_no}</td>
+                                </tr>
+                                </table>
+                                <br/> <br/>
+                                <i> Kindly contact the user as soon as possible </i>"""
+                callemail("ravi.ash2002@gmail.com", message_text, message_html, subject)
+
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -64,7 +125,7 @@ class SoilCard(APIView):
 
         # Connect to InfluxDB cloud bucket
         client = InfluxDBClient(url="https://us-east-1-1.aws.cloud2.influxdata.com",
-                                token="PeXRfmRKybQERNtIPwL7xQLIwVac_8sATSgf4ycnogSFjusOyCnZepHgNCJiop9Cm-iZYJU4qNYrHrhFGaxzMg==",
+                                token="LP01WCA84dLJeP9SPoVlNxIzmrq78JsWIcpmY0sgF7CVjKrOAgpxxorbx8vxV1UidFa4ynqfio9d2EPa2OT8dA==",
                                 org="Goop AI",
                                 ssl=True,
                                 verify_ssl=True,
@@ -73,7 +134,7 @@ class SoilCard(APIView):
         # Query data from the InfluxDB cloud bucket
         # query = f'from(bucket:"SoilHealthCard") |> range(start: -1h) |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")'
         query =  f'''
-            from(bucket: "SoilHealthCard")
+            from(bucket: "SoilSampleData")
             |> range(start: -1000h)
             |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")
         '''
@@ -126,7 +187,7 @@ class SoilCard(APIView):
 
         # Connect to InfluxDB cloud bucket
         client = InfluxDBClient(url="https://us-east-1-1.aws.cloud2.influxdata.com",
-                                token="PeXRfmRKybQERNtIPwL7xQLIwVac_8sATSgf4ycnogSFjusOyCnZepHgNCJiop9Cm-iZYJU4qNYrHrhFGaxzMg==",
+                                token="LP01WCA84dLJeP9SPoVlNxIzmrq78JsWIcpmY0sgF7CVjKrOAgpxxorbx8vxV1UidFa4ynqfio9d2EPa2OT8dA==",
                                 org="Goop AI",
                                 ssl=True,
                                 verify_ssl=True,
@@ -135,20 +196,20 @@ class SoilCard(APIView):
         # Query data from the InfluxDB cloud bucket
         # query = f'from(bucket:"SoilHealthCard") |> range(start: -1h) |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")'
         query =  f'''
-            from(bucket: "SoilHealthCard")
+            from(bucket: "SoilSampleData")
             |> range(start: -1000h)
             |> filter(fn: (r) => r._measurement == "Soil Nutrients" and r.Soil_Sample_Number == "{soil_sample_no}")
         '''
         tables = client.query_api().query(query, org="Goop AI")
 
         # Process the queried data
-        # print(tables)
+        print(tables)
         results = {}
         results['Soil_Sample_Number'] = soil_sample_no
         # print(tables)
         for table in tables:
             for row in table.records:
-                # print(type(row.values))
+                print(row.values)
                 results[row.values['_field']] = row.values['_value']
 
         if(len(results) > 1):

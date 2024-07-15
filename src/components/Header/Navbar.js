@@ -29,16 +29,28 @@ export default function Navbar({ fixed }) {
             </Link>
             <Link 
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/infrastructure"
+            >
+              Infrastructure
+            </Link>
+            <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
               to="/vision-mission"
             >
               Vision & Mission
             </Link>
             <Link 
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+              to="/services"
+            >
+              Services
+            </Link>
+            {/* <Link 
+              className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
               to="/soil-testing"
             >
               Soil Testing
-            </Link>
+            </Link> */}
             {/* <Link
               className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
               to="/cardform"
@@ -93,6 +105,16 @@ export default function Navbar({ fixed }) {
                 <Link
                     className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
                     to="/adminprofile"
+                  >
+                    Profile
+                  </Link>
+                );
+              }
+              else if(auth.user && win.getItem('type') === 'farmer'){
+                return(
+                <Link
+                    className="text-sm font-bold leading-relaxed inline-block mr-4 py-1 whitespace-nowrap uppercase text-white hover:opacity-75"
+                    to="/farmer-profile"
                   >
                     Profile
                   </Link>

@@ -106,9 +106,9 @@ function FarmerProfile() {
       
       function getUserDetails(){
         const params = {
-          email : auth.user === null? win.getItem('email') : auth.user
+          mobile : auth.user === null? win.getItem('email') : auth.user
         }
-        axios.get('http://localhost:8000/api/users/', { params })
+        axios.get('http://localhost:8000/api/farmers/', { params })
         .then(response => {
           const responseData = response.data;
           console.log(responseData)
@@ -124,6 +124,37 @@ function FarmerProfile() {
       }
       
       getUserDetails()
+
+      function getEnquiryDetails(){
+        if(isLoading === 2){
+          const params = {
+            mobile : auth.user === null? win.getItem('email') : auth.user
+          }
+          axios.get('http://localhost:8000/api/enquiries/', { params })
+          .then(response => {
+            const responseData = response.data;
+            console.log(responseData)
+            setEnquiry(responseData)
+            if(responseData.length !== 0){
+              setEnquiryLoading(1)
+              setEnquiry(responseData)
+              setGetEnquiry(0)
+            }
+            else{
+              setEnquiryLoading(1)
+              setEnquiry(responseData)
+              setGetEnquiry(0)
+            }
+            setIsLoading(2)
+            }
+          )
+          .catch(error => {
+            console.log(error)
+            // setEnquiryLoading(1)
+          })
+        }
+      }
+      getEnquiryDetails()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     if(isLoading === 0){
@@ -147,35 +178,15 @@ function FarmerProfile() {
       )
     }
     else if(isLoading === 2){
-      if(getEnquiry === 1){
-        function getEnquiryDetails(){
-          if(isLoading == 2){
-            const params = {
-              mobile : userDetails['mobile']
-            }
-            axios.get('http://localhost:8000/api/enquiries/', { params })
-            .then(response => {
-              const responseData = response.data;
-              console.log(responseData)
-              setEnquiry(responseData)
-              if(responseData.length !== 0){
-                setEnquiryLoading(1)
-                setGetEnquiry(0)
-              }
-              else{
-                setEnquiryLoading(0)
-              }
-              }
-            )
-            .catch(error => {
-              console.log(error)
-              // setEnquiryLoading(1)
-            })
-          }
-        }
-        getEnquiryDetails()
+      if (enquiryLoading === 0){
+        return (
+          <>
+            <LoadingScreen />
+          </>
+        )
       }
-      
+      else{
+        console.log(enquiry)
   return (
     <>
     <Header />
@@ -428,9 +439,11 @@ function FarmerProfile() {
           {enquiry.map(({ district, enquiry_no, mobile, name, soil_sample_no, survey_no, taluk, village}, index) => {
             const isLast = index === enquiry.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-            if(soil_sample_no !== null){
+            const statusColor = soil_sample_no === null ? 'bg-red-100' : 'bg-green-100'
+            console.log(district)
+            if(1){
               return (
-                <tr key={enquiry_no}>
+                <tr key={enquiry_no} className={statusColor}>
                   {/* <td className={classes}>
                     <Typography variant="small" color="blue-gray" className=" max-w-20 font-normal">
                       {enquiry_no}
@@ -458,12 +471,24 @@ function FarmerProfile() {
                   </td>
                   <td className={`${classes} bg-blue-gray-50/50`}>
                     <Typography variant="small" color="blue-gray" className="font-semibold">
-                      {soil_sample_no}
+                    {(() => {
+                      if(soil_sample_no!==null){
+                        return(
+                          <span className='text-green-600'>{soil_sample_no}</span>
+                        )
+                      }
+                      else{
+                        return(
+                          <span className='text-red-600'>In Progress</span>
+                        )
+                      }
+                    })()}
                     </Typography>
                   </td>
                 </tr>
               );
             }
+            return null;
           })}
         </tbody>
       </table>
@@ -474,7 +499,7 @@ function FarmerProfile() {
     <Footer />
     </>
   )
-}
+} }
 }
 
 export default FarmerProfile

@@ -22,17 +22,18 @@ function FarmerLogin() {
     const win = window.sessionStorage;
     const auth = useAuth();
     function checkUser(){
-        axios.post('http://localhost:8000/api/users/', { 
-            email : email,
+        var mobileno = email
+        axios.post('http://localhost:8000/api/farmers/', { 
+            mobile : mobileno,
             password : password
         })
         .then(response => {
           const responseData = response.data;
           if(responseData['Success']!=null){
             win.setItem('email', email)
-            win.setItem('type', 'user')
+            win.setItem('type', 'farmer')
             auth.login(email)
-            navigate('/profile')
+            navigate('/farmer-profile')
           }
         })
         .catch(error => {
@@ -72,7 +73,7 @@ function FarmerLogin() {
                         </Typography>
                         <Input
                             size="lg"
-                            maxLength={50}
+                            maxLength={10}
                             placeholder="1234567890"
                             className="bg-white !border-t-blue-gray-200 focus:!border-t-gray-900 min-w-[50px] w-fill h-fill"
                             value={email}
@@ -98,12 +99,7 @@ function FarmerLogin() {
                         />
                         </div>
 
-                            <Button className="mt-6" fullWidth onClick={()=>{
-                                win.setItem('email', 'ramesh123@gmail.com')
-                                win.setItem('type', 'user')
-                                auth.login('ramesh123@gmail.com')
-                                navigate('/farmer-profile')
-                            }}>
+                            <Button className="mt-6" fullWidth onClick={checkUser}>
                                 Submit
                             </Button>
 

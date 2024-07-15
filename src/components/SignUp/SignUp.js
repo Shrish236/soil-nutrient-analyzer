@@ -59,6 +59,7 @@ function SignUp() {
             }
             })
             .catch(error => {
+                alert(error.response.data['email'])
                 console.log(error)
             })
         }

@@ -149,7 +149,7 @@ function ProfilePage() {
     else if(isLoading === 2){
       if(getEnquiry === 1){
         function getEnquiryDetails(){
-          if(isLoading == 2){
+          if(isLoading === 2){
             const params = {
               mobile : userDetails['mobile']
             }
@@ -164,6 +164,7 @@ function ProfilePage() {
               }
               else{
                 setEnquiryLoading(0)
+                setGetEnquiry(0)
               }
               }
             )

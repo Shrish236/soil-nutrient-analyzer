@@ -19,6 +19,8 @@ import FarmerProfile from './components/Farmer/FarmerProfile';
 import { RequireAuth } from './utils/RequireAuth';
 import { Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './utils/auth';
+import Infrastructure from './components/Infrastructure/Infrastructure';
+import Services from './components/Services/Services';
 function App() {
   return (
     <AuthProvider>
@@ -33,6 +35,8 @@ function App() {
       <Route path='linksoilnumber' element = {<RequireAuth><LinkSoilSampleNumber /></RequireAuth>} />
       <Route path='cardform' element={<SoilHealthCardForm />} />
       <Route path='aboutus' element={<AboutUs />} />
+      <Route path='infrastructure' element={<Infrastructure />} />
+      <Route path='services' element={<Services />} />
       <Route path='vision-mission' element={<Vision_Mission />} />
       <Route path='soil-testing' element={<SoilTesting />} />
       <Route path='contact-us' element={<ContactUs />} />

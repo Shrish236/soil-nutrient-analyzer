@@ -59,15 +59,15 @@ function Homepage(props) {
             </div>
         </div>
         </div>
-        <div className='block z-1 justify-start h-1/4 w-fit py-5 px-2'>
+        {/* <div className='block z-1 justify-start h-1/4 w-fit py-5 px-2'>
             <img src={image} className ="overflow-hidden" alt = "TN Resources"></img>
-        </div>
-        <div className='flex flex-col w-full justify-center align-middle p-5'>
-          <Card className='w-5/6 align-middle justify-center self-center text-center bg-orange-100'>
-            <CardBody>
-              Our Work
-            </CardBody>
-          </Card>
+        </div> */}
+        <div className='flex flex-col w-full justify-center text-justify  align-middle p-10'>
+        <p><span className='self-left'>&nbsp; Welcome to our Soil Nutrient Analysis Laboratory. We specialize in employing LIBS (Laser-Induced Breakdown Spectroscopy)
+           spectrometers to conduct precise and efficient analyses of soil samples. Our laboratory is equipped with cutting-edge technology to provide accurate measurements 
+           of key soil parameters, including pH levels, NPK content,  organic matter, and micro-nutrients. Our expert team of analysts ensures the reliability of results, offering 
+           valuable insights into soil health for informed agricultural practices. With a commitment to delivering high-quality data, we aim to support farmers, researchers, and land
+          managers in optimizing soil conditions for enhanced crop productivity.</span></p>
         </div>
         {/* </div> */}
       </div>
