@@ -7,10 +7,12 @@ class Header extends Component {
   
   render() {
     return <div className="flex flex-wrap items-center bg-gray-100 p-2 justify-center sm:justify-between">
-    <img src={CIoTLogo} className="h-16 mb-2 sm:mb-0 mr-4" alt='logo'/> {/* Added margin right for separation on small screens */}
+    <img src={logoURL} className="h-16 mb-2 sm:mb-0 mr-4" alt='logo'/> {/* Added margin right for separation on small screens */}
     <div className="flex flex-col text-center ">
+
         <span className="text-lg font-medium block sm:inline">Soil Testing Research and Development Laboratory</span>
-        <span className="text-gray-500 text-base font-medium block sm:inline">Government of Tamil Nadu</span>
+        <span className="text-gray-500 text-center font-medium block sm:inline">Government of Tamil Nadu</span>
+
     </div>
     <img src={aulogoURL} className="h-16" alt='logo'/>
 </div>

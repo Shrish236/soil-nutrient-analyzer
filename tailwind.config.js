@@ -23,7 +23,8 @@ module.exports = withMT({
         'farmerregbg':"url('/src/assets/farmerregbg.png')",
         'farmerloginbg':"url('/src/assets/farmerloginbg.jpg')",
         'infrastructurebg':"url('/src/assets/infrastructure-bg.jpg')",
-        'servicesbg':"url('/src/assets/services-bg.jpg')"
+        'servicesbg':"url('/src/assets/services-bg.jpg')",
+        "ciotlogobg":"url('/src/assets/ciotlogo.png')"
       },
     },
     screens: {
